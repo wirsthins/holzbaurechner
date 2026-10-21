@@ -160,3 +160,14 @@ tfoot td{font-weight:600;border-bottom:0}
 .site-footer .install{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1rem;color:var(--ink);padding-bottom:.9rem;margin-bottom:1rem;border-bottom:1px solid var(--rule)}
 .site-footer .install[hidden],.btn[hidden]{display:none}
 .site-footer .install .btn{margin:0;padding:.5rem .9rem;font-size:.9rem}
+
+/* Reiter Weihnachtsprojekte */
+.site-header nav a.nav-xmas{color:var(--timber);display:inline-flex;align-items:center;gap:.3em}
+.nav-xmas svg{width:.9em;height:.9em;fill:currentColor;flex:none}
+@media (max-width:640px){
+  .bar{flex-wrap:wrap;row-gap:0;padding-top:.45rem}
+  .site-header nav{width:100%;gap:1.1rem;padding:.35rem 0 .55rem;overflow-x:auto;scrollbar-width:none;font-size:.95rem}
+  .site-header nav::-webkit-scrollbar{display:none}
+  .site-header nav a{white-space:nowrap}
+  html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 6rem)}
+}

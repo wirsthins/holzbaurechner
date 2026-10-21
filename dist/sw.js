@@ -1,25 +1,31 @@
 /* Service Worker für die Holzbaurechner-App.
    build.js setzt Version und Dateiliste ein und legt die Datei als /sw.js ab.
    Seiten: erst Netz (max. 3 s), sonst gespeicherte Fassung. Dateien unter /assets/: aus dem Speicher. */
-const VERSION = 'aaa5ba83f2';
+const VERSION = 'a7e5bc24dd';
 const PRECACHE = [
   "/",
+  "/adventskalender-rechner/",
   "/baugenehmigung/",
   "/carport-rechner/",
   "/datenschutz/",
   "/gartenzaun-rechner/",
+  "/gluehweinhuette-rechner/",
   "/hochbeet-rechner/",
+  "/holz-weihnachtsbaum-rechner/",
   "/holzpreise/",
+  "/holzstern-rechner/",
   "/holzterrasse-rechner/",
   "/impressum/",
+  "/krippenstall-rechner/",
   "/terrassenueberdachung-rechner/",
   "/tisch-rechner/",
   "/unterkonstruktion-rechner/",
+  "/weihnachtsprojekte/",
   "/manifest.webmanifest",
   "/assets/app.js?v=5bbbf6045d",
   "/assets/baugenehmigung.js?v=0fdd6b17fd",
-  "/assets/rechner.js?v=ac4a4708d0",
-  "/assets/style.css?v=c99730c06b",
+  "/assets/rechner.js?v=68af365891",
+  "/assets/style.css?v=98807892b9",
   "/assets/umrechner.js?v=e76a54c311",
   "/assets/fonts/barlow-400.woff2",
   "/assets/fonts/barlow-600.woff2",
