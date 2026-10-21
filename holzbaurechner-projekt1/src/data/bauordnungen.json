@@ -1,0 +1,399 @@
+{
+  "stand": "September 2026",
+  "laender": {
+    "de": {
+      "label": "Deutschland",
+      "begriffe": "In Deutschland regelt jedes Bundesland in seiner Landesbauordnung, welche Vorhaben verfahrensfrei sind, also ohne Bauantrag errichtet werden dürfen. Garagen, Carports (überdachte Stellplätze) und Terrassenüberdachungen stehen dort meist mit Größengrenzen, zum Beispiel für Grundfläche, Wandhöhe oder Lage im Außenbereich.",
+      "behoerde": "Zuständig ist die untere Bauaufsichtsbehörde, meist beim Landkreis oder bei der kreisfreien Stadt, in größeren Gemeinden auch das städtische Bauamt.",
+      "eintraege": [
+        {
+          "id": "baden-wuerttemberg",
+          "name": "Baden-Württemberg",
+          "gesetz": "Landesbauordnung für Baden-Württemberg",
+          "kurz": "LBO",
+          "paragraphen": [
+            [
+              "§ 50 mit Anhang 1",
+              "Verfahrensfreie Vorhaben"
+            ]
+          ],
+          "link": "https://www.landesrecht-bw.de/jportal/?quelle=jlink&query=BauO+BW&psml=bsbawueprod.psml&max=true&aiz=true"
+        },
+        {
+          "id": "bayern",
+          "name": "Bayern",
+          "gesetz": "Bayerische Bauordnung",
+          "kurz": "BayBO",
+          "paragraphen": [
+            [
+              "Art. 57",
+              "Verfahrensfreie Bauvorhaben, Beseitigung von Anlagen"
+            ]
+          ],
+          "link": "https://www.gesetze-bayern.de/Content/Document/BayBO-57"
+        },
+        {
+          "id": "berlin",
+          "name": "Berlin",
+          "gesetz": "Bauordnung für Berlin",
+          "kurz": "BauO Bln",
+          "paragraphen": [
+            [
+              "§ 61",
+              "Verfahrensfreie Bauvorhaben, Beseitigung von Anlagen"
+            ]
+          ],
+          "link": "https://gesetze.berlin.de/bsbe/document/jlr-BauOBE2005V7P61"
+        },
+        {
+          "id": "brandenburg",
+          "name": "Brandenburg",
+          "gesetz": "Brandenburgische Bauordnung",
+          "kurz": "BbgBO",
+          "paragraphen": [
+            [
+              "§ 61",
+              "Verfahrensfreie Vorhaben"
+            ]
+          ],
+          "link": "https://bravors.brandenburg.de/gesetze/bbgbo_2016"
+        },
+        {
+          "id": "bremen",
+          "name": "Bremen",
+          "gesetz": "Bremische Landesbauordnung",
+          "kurz": "BremLBO",
+          "paragraphen": [
+            [
+              "§ 61",
+              "Verfahrensfreie Bauvorhaben, Beseitigung von Anlagen"
+            ]
+          ],
+          "link": "https://www.transparenz.bremen.de/metainformationen/bremische-landesbauordnung-vom-29-mai-2024-232736?template=20_gp_ifg_meta_detail_d",
+          "hinweis": "Neufassung vom 29. Mai 2024."
+        },
+        {
+          "id": "hamburg",
+          "name": "Hamburg",
+          "gesetz": "Hamburgische Bauordnung",
+          "kurz": "HBauO",
+          "paragraphen": [
+            [
+              "§ 61",
+              "Verfahrensfreie Bauvorhaben, Beseitigung von Anlagen"
+            ]
+          ],
+          "link": "https://www.landesrecht-hamburg.de/bsha/document/jlr-BauOHA2025pIVZ",
+          "hinweis": "Neufassung vom 6. Januar 2025. In der früheren Fassung standen die verfahrensfreien Vorhaben in § 60 mit Anlage 2."
+        },
+        {
+          "id": "hessen",
+          "name": "Hessen",
+          "gesetz": "Hessische Bauordnung",
+          "kurz": "HBO",
+          "paragraphen": [
+            [
+              "§ 63 mit Anlage",
+              "Baugenehmigungsfreie Vorhaben"
+            ]
+          ],
+          "link": "https://www.lareda.hessenrecht.hessen.de/bshe/document/jlr-BauOHE2018V7Anlage"
+        },
+        {
+          "id": "mecklenburg-vorpommern",
+          "name": "Mecklenburg-Vorpommern",
+          "gesetz": "Landesbauordnung Mecklenburg-Vorpommern",
+          "kurz": "LBauO M-V",
+          "paragraphen": [
+            [
+              "§ 61",
+              "Verfahrensfreie Bauvorhaben, Beseitigung von Anlagen"
+            ]
+          ],
+          "link": "https://www.landesrecht-mv.de/bsmv/document/jlr-BauOMV2015rahmen"
+        },
+        {
+          "id": "niedersachsen",
+          "name": "Niedersachsen",
+          "gesetz": "Niedersächsische Bauordnung",
+          "kurz": "NBauO",
+          "paragraphen": [
+            [
+              "§ 60 mit Anhang",
+              "Verfahrensfreie Baumaßnahmen"
+            ]
+          ],
+          "link": "https://voris.wolterskluwer-online.de/browse/document/7fae4c92-7f76-39ab-91af-07e1f8e825ce",
+          "hinweis": "Aktuelle Fassung seit 1. Juli 2025."
+        },
+        {
+          "id": "nordrhein-westfalen",
+          "name": "Nordrhein-Westfalen",
+          "gesetz": "Landesbauordnung 2018",
+          "kurz": "BauO NRW 2018",
+          "paragraphen": [
+            [
+              "§ 62",
+              "Verfahrensfreie Bauvorhaben, Beseitigung von Anlagen"
+            ]
+          ],
+          "link": "https://recht.nrw.de/lrgv/gesetz/01092026-landesbauordnung-2018-bauo-nrw-2018/",
+          "hinweis": "Aktuelle Fassung seit 1. September 2026."
+        },
+        {
+          "id": "rheinland-pfalz",
+          "name": "Rheinland-Pfalz",
+          "gesetz": "Landesbauordnung Rheinland-Pfalz",
+          "kurz": "LBauO",
+          "paragraphen": [
+            [
+              "§ 62",
+              "Genehmigungsfreie Vorhaben"
+            ]
+          ],
+          "link": "https://www.landesrecht.rlp.de/bsrp/document/jlr-NNLRP00005B3ENN00000000204"
+        },
+        {
+          "id": "saarland",
+          "name": "Saarland",
+          "gesetz": "Landesbauordnung",
+          "kurz": "LBO",
+          "paragraphen": [
+            [
+              "§ 61",
+              "Verfahrensfreie Vorhaben, Beseitigung von Anlagen"
+            ]
+          ],
+          "link": "https://recht.saarland.de/bssl/document/jlr-BauOSL2004V17P61"
+        },
+        {
+          "id": "sachsen",
+          "name": "Sachsen",
+          "gesetz": "Sächsische Bauordnung",
+          "kurz": "SächsBO",
+          "paragraphen": [
+            [
+              "§ 61",
+              "Verfahrensfreie Bauvorhaben, Beseitigung von Anlagen"
+            ]
+          ],
+          "link": "https://www.revosax.sachsen.de/vorschrift/1779-SaechsBO"
+        },
+        {
+          "id": "sachsen-anhalt",
+          "name": "Sachsen-Anhalt",
+          "gesetz": "Bauordnung des Landes Sachsen-Anhalt",
+          "kurz": "BauO LSA",
+          "paragraphen": [
+            [
+              "§ 60",
+              "Verfahrensfreie Bauvorhaben, Beseitigung von Anlagen"
+            ]
+          ],
+          "link": "https://www.landesrecht.sachsen-anhalt.de/bsst/document/jlr-BauOST2013V18P60"
+        },
+        {
+          "id": "schleswig-holstein",
+          "name": "Schleswig-Holstein",
+          "gesetz": "Landesbauordnung für das Land Schleswig-Holstein",
+          "kurz": "LBO",
+          "paragraphen": [
+            [
+              "§ 61",
+              "Verfahrensfreie Bauvorhaben, Beseitigung von Anlagen"
+            ]
+          ],
+          "link": "https://www.gesetze-rechtsprechung.sh.juris.de/bssh/document/jlr-BauOSH2024pP61",
+          "hinweis": "Neufassung vom 5. Juli 2024."
+        },
+        {
+          "id": "thueringen",
+          "name": "Thüringen",
+          "gesetz": "Thüringer Bauordnung",
+          "kurz": "ThürBO",
+          "paragraphen": [
+            [
+              "§ 63",
+              "Verfahrensfreie Bauvorhaben, Beseitigung von Anlagen"
+            ]
+          ],
+          "link": "https://landesrecht.thueringen.de/bsth/document/jlr-BauOTH2024rahmen",
+          "hinweis": "Neufassung vom 2. Juli 2024, zuletzt geändert im Juli 2026. In der früheren Fassung war es § 60."
+        }
+      ]
+    },
+    "at": {
+      "label": "Österreich",
+      "begriffe": "In Österreich ist Baurecht Landessache. Die Bauordnungen unterscheiden meist zwischen bewilligungspflichtigen, anzeigepflichtigen (in manchen Ländern melde- oder mitteilungspflichtigen) und freien Vorhaben. Carports, Flugdächer und Terrassenüberdachungen fallen je nach Größe und Lage in unterschiedliche Gruppen.",
+      "behoerde": "Baubehörde erster Instanz ist in der Regel der Bürgermeister der Gemeinde, in Statutarstädten der Magistrat. Das Bauamt der Gemeinde ist die erste Anlaufstelle.",
+      "eintraege": [
+        {
+          "id": "burgenland",
+          "name": "Burgenland",
+          "gesetz": "Burgenländisches Baugesetz 1997",
+          "kurz": "Bgld. BauG",
+          "paragraphen": [
+            [
+              "§ 16",
+              "Geringfügige Bauvorhaben"
+            ],
+            [
+              "§ 17",
+              "Bewilligungsverfahren"
+            ]
+          ],
+          "link": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=LrBgld&Gesetzesnummer=10000504"
+        },
+        {
+          "id": "kaernten",
+          "name": "Kärnten",
+          "gesetz": "Kärntner Bauordnung 1996",
+          "kurz": "K-BO 1996",
+          "paragraphen": [
+            [
+              "§ 6",
+              "Baubewilligungspflichtige Vorhaben"
+            ],
+            [
+              "§ 7",
+              "Bewilligungsfreie, mitteilungspflichtige Vorhaben"
+            ]
+          ],
+          "link": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=LrK&Gesetzesnummer=10000201"
+        },
+        {
+          "id": "niederoesterreich",
+          "name": "Niederösterreich",
+          "gesetz": "NÖ Bauordnung 2014",
+          "kurz": "NÖ BO 2014",
+          "paragraphen": [
+            [
+              "§ 14",
+              "Bewilligungspflichtige Bauvorhaben"
+            ],
+            [
+              "§ 17",
+              "Bewilligungs- und meldefreie Vorhaben"
+            ]
+          ],
+          "link": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=LrNO&Gesetzesnummer=20001079&Artikel=&Paragraf=17&Anlage=&Uebergangsrecht=",
+          "hinweis": "Zuletzt geändert mit Wirkung ab 1. März 2026."
+        },
+        {
+          "id": "oberoesterreich",
+          "name": "Oberösterreich",
+          "gesetz": "Oö. Bauordnung 1994",
+          "kurz": "Oö. BauO 1994",
+          "paragraphen": [
+            [
+              "§ 24",
+              "Bewilligungspflichtige Bauvorhaben"
+            ],
+            [
+              "§ 25",
+              "Anzeigepflichtige Bauvorhaben"
+            ],
+            [
+              "§ 26",
+              "Bewilligungs- und anzeigefreie Bauvorhaben"
+            ]
+          ],
+          "link": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=LrOO&Gesetzesnummer=10000411"
+        },
+        {
+          "id": "salzburg",
+          "name": "Salzburg",
+          "gesetz": "Baupolizeigesetz 1997",
+          "kurz": "BauPolG",
+          "paragraphen": [
+            [
+              "§ 2",
+              "Bewilligungspflichtige Maßnahmen"
+            ],
+            [
+              "§ 3",
+              "Anzeigepflichtige bewilligungsfreie Maßnahmen"
+            ]
+          ],
+          "link": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=LrSbg&Gesetzesnummer=10001005"
+        },
+        {
+          "id": "steiermark",
+          "name": "Steiermark",
+          "gesetz": "Steiermärkisches Baugesetz",
+          "kurz": "Stmk. BauG",
+          "paragraphen": [
+            [
+              "§ 19",
+              "Baubewilligungspflichtige Vorhaben"
+            ],
+            [
+              "§ 20",
+              "Baubewilligungspflichtige Vorhaben im vereinfachten Verfahren"
+            ],
+            [
+              "§ 21",
+              "Meldepflichtige Vorhaben"
+            ]
+          ],
+          "link": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=LrStmk&Gesetzesnummer=20000070"
+        },
+        {
+          "id": "tirol",
+          "name": "Tirol",
+          "gesetz": "Tiroler Bauordnung 2022",
+          "kurz": "TBO 2022",
+          "paragraphen": [
+            [
+              "§ 28",
+              "Bewilligungspflichtige und anzeigepflichtige Bauvorhaben, Ausnahmen"
+            ]
+          ],
+          "link": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=LrT&Gesetzesnummer=20000911"
+        },
+        {
+          "id": "vorarlberg",
+          "name": "Vorarlberg",
+          "gesetz": "Baugesetz",
+          "kurz": "BauG",
+          "paragraphen": [
+            [
+              "§ 18",
+              "Bewilligungspflichtige Bauvorhaben"
+            ],
+            [
+              "§ 19",
+              "Anzeigepflichtige Bauvorhaben"
+            ]
+          ],
+          "link": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=LrVbg&Gesetzesnummer=20000734"
+        },
+        {
+          "id": "wien",
+          "name": "Wien",
+          "gesetz": "Bauordnung für Wien",
+          "kurz": "BO für Wien",
+          "paragraphen": [
+            [
+              "§ 60",
+              "Bewilligungspflichtige Bauvorhaben"
+            ],
+            [
+              "§ 62",
+              "Bauanzeige"
+            ],
+            [
+              "§ 62a",
+              "Bewilligungsfreie Bauvorhaben"
+            ]
+          ],
+          "link": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=LrW&Gesetzesnummer=20000006",
+          "extra": [
+            "Merkblatt der Stadt Wien zu Nebengebäuden, Flugdächern, Garagen und Carports",
+            "https://www.wien.gv.at/pdf/ma37/nebengebaeude-flugdaecher-garagen-carports.pdf"
+          ]
+        }
+      ]
+    }
+  }
+}

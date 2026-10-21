@@ -1,0 +1,6 @@
+# Österreich-Domain und alte Netlify-Adresse auf die Hauptdomain weiterleiten
+https://holzbaurechner.at/*        https://www.holzbaurechner.de/:splat  301!
+https://www.holzbaurechner.at/*    https://www.holzbaurechner.de/:splat  301!
+http://holzbaurechner.at/*         https://www.holzbaurechner.de/:splat  301!
+http://www.holzbaurechner.at/*     https://www.holzbaurechner.de/:splat  301!
+https://holzrechner.netlify.app/*  https://www.holzbaurechner.de/:splat  301!

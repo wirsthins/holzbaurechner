@@ -1,0 +1,13 @@
+{
+  "stand": "September 2026",
+  "hinweis": "Beispielwerte für den Handel in Deutschland und Österreich, pro m³ inkl. MwSt.",
+  "hoelzer": {
+    "kvh":       { "label": "KVH Fichte (Konstruktionsvollholz)", "preis": 750,  "einsatz": "Pfosten, Balken, Sparren" },
+    "bsh":       { "label": "BSH Fichte (Brettschichtholz, Leimbinder)", "preis": 950, "einsatz": "Pfetten, große Spannweiten" },
+    "laerche":   { "label": "Lärche", "preis": 1250, "einsatz": "Außenbereich ohne Holzschutzmittel" },
+    "douglasie": { "label": "Douglasie", "preis": 1050, "einsatz": "Außenbereich, Hochbeete, Überdachungen" },
+    "kdi":       { "label": "Fichte kesseldruckimprägniert", "preis": 800, "einsatz": "Gartenbau, Zäune, Hochbeete" },
+    "fichte":    { "label": "Fichte gehobelt (Bretter)", "preis": 800, "einsatz": "Möbel, Innenausbau" },
+    "eiche":     { "label": "Eiche (Bretter)", "preis": 2600, "einsatz": "Tische, hochwertige Möbel" }
+  }
+}

@@ -1,0 +1,173 @@
+/* Schriften liegen lokal unter /assets/fonts/ (DSGVO: nichts wird von Google geladen). */
+@font-face{font-family:'Barlow';src:url('/assets/fonts/barlow-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Barlow';src:url('/assets/fonts/barlow-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Barlow Condensed';src:url('/assets/fonts/barlow-condensed-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Barlow Condensed';src:url('/assets/fonts/barlow-condensed-700.woff2') format('woff2');font-weight:700;font-display:swap}
+
+:root{
+  --bg:#F2F3EE; --surface:#FBFCF8; --ink:#1D2A23; --muted:#5C6961; --rule:#CBD1C6;
+  --timber:#A8661F; --timber-soft:#EBDABF; --plan:#2F5D4A; --focus:#2F5D4A;
+  --cond:'Barlow Condensed','Arial Narrow','Roboto Condensed',system-ui,sans-serif;
+  --sans:'Barlow',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121A16; --surface:#19231E; --ink:#E5EAE2; --muted:#98A59D; --rule:#34423A;
+    --timber:#D99A4E; --timber-soft:#3B3021; --plan:#8FC4AA; --focus:#8FC4AA; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121A16; --surface:#19231E; --ink:#E5EAE2; --muted:#98A59D; --rule:#34423A;
+  --timber:#D99A4E; --timber-soft:#3B3021; --plan:#8FC4AA; --focus:#8FC4AA; color-scheme:dark;
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 4rem)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-text-size-adjust:100%}
+a{color:inherit;text-decoration-color:var(--timber);text-underline-offset:3px}
+a:hover{color:var(--timber)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 1.25rem}
+img{max-width:100%;height:auto}
+
+/* Kopf und Fuß */
+.site-header{border-bottom:1px solid var(--rule);background:var(--bg);position:sticky;top:env(safe-area-inset-top,0px);z-index:10}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:3.5rem}
+.brand{font:700 1.6rem/1 var(--cond);text-decoration:none;display:inline-flex;align-items:baseline;gap:.3em}
+.brand-logo{width:.82em;height:.82em;flex:none;position:relative;top:.08em}
+.site-header nav{display:flex;gap:1.25rem}
+.site-header nav a{text-decoration:none;font-weight:600}
+.site-footer{border-top:1px solid var(--rule);margin-top:4rem;padding:1.5rem 0 2.5rem;color:var(--muted);font-size:.9rem}
+.site-footer p{max-width:46rem;margin:0 0 .6rem}
+.site-footer a{margin-right:1rem}
+
+/* Text */
+h1{font:700 clamp(2.1rem,8vw,3.8rem)/.98 var(--cond);hyphens:auto;overflow-wrap:break-word;margin:2.25rem 0 .75rem;letter-spacing:-.01em}
+h2{font:600 clamp(1.6rem,4vw,2rem)/1.15 var(--cond);margin:2.5rem 0 .6rem}
+h3{font:600 1.35rem/1.2 var(--cond);margin:1.75rem 0 .4rem}
+.lead{font-size:1.1rem;color:var(--muted);max-width:40rem;margin:0 0 1.5rem}
+.prose{max-width:44rem}
+.prose p,.prose ul,.prose ol{margin:0 0 1rem}
+.prose li+li{margin-top:.3rem}
+.crumbs{font-size:.9rem;color:var(--muted);margin-top:1.25rem}
+.crumbs a{color:var(--muted)}
+
+/* Startseite */
+.tools{list-style:none;padding:0;margin:1rem 0 0;border-top:2px solid var(--ink)}
+.tools li{border-bottom:1px solid var(--rule)}
+.tools a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.2rem 1rem;padding:1rem 0;text-decoration:none}
+.tools strong{font:600 1.5rem/1.1 var(--cond)}
+.tools span{color:var(--muted);grid-column:1}
+.tools em{grid-row:1/3;grid-column:2;align-self:center;font-style:normal;font-weight:600;color:var(--timber)}
+
+/* Rechner */
+.tool{display:grid;grid-template-columns:minmax(0,1fr);gap:2.5rem;padding:.5rem 0 1rem}
+@media (min-width:900px){.tool{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:3.5rem}}
+.tool h2{margin-top:0;font-size:1.4rem}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.field label{display:block;font-size:.9rem;font-weight:600;margin-bottom:.3rem;overflow-wrap:anywhere}
+.inputbox{display:flex;align-items:center;border:1px solid var(--rule);background:var(--surface);border-radius:6px}
+.inputbox input,.inputbox select{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:500 1.05rem var(--sans);padding:.6rem .7rem;font-variant-numeric:tabular-nums;border-radius:6px}
+.inputbox .unit{color:var(--muted);padding-right:.7rem;font-size:.9rem;white-space:nowrap}
+.field.wide{grid-column:1/-1}
+.check{grid-column:1/-1;display:flex;gap:.6rem;align-items:center;font-size:.95rem}
+.check input{width:1.15rem;height:1.15rem;accent-color:var(--plan)}
+.plan{margin-top:1.75rem;border-top:1px solid var(--rule);padding-top:1rem}
+.plan svg{width:100%;height:auto;max-height:300px;display:block}
+.plan h2.side-title{margin-top:1.75rem}
+.plan h2.side-title.first{margin-top:0}
+.plan [hidden]{display:none}
+.legend{display:flex;flex-wrap:wrap;gap:.4rem 1.1rem;font-size:.85rem;color:var(--muted);margin-top:.5rem}
+.legend span{display:inline-flex;align-items:center;gap:.35rem}
+.sw{width:.8rem;height:.8rem;display:inline-block;border-radius:2px}
+.total{font:700 clamp(2.4rem,8vw,3.3rem)/1 var(--cond);font-variant-numeric:tabular-nums;margin:.2rem 0 .4rem}
+.sub{color:var(--muted);margin:0 0 1.4rem}
+.tablebox{overflow-x:auto;border-top:2px solid var(--ink)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.tool table{min-width:460px}
+th{font:600 .85rem var(--sans);color:var(--muted);text-align:left;padding:.55rem .5rem;border-bottom:1px solid var(--rule)}
+td{padding:.6rem .5rem;border-bottom:1px solid var(--rule);vertical-align:middle}
+th.num,td.num{text-align:right}
+td.name{font-weight:600}
+.qs{display:inline-flex;align-items:center;gap:.5rem}
+tfoot td{font-weight:600;border-bottom:0}
+.costlines{margin:1rem 0 0;display:grid;grid-template-columns:1fr auto;gap:.35rem 1rem;font-variant-numeric:tabular-nums}
+.costlines dt{color:var(--muted)}
+.costlines dd{margin:0;text-align:right}
+.notes{margin:1.2rem 0 0;padding-left:1.1rem;color:var(--muted);font-size:.95rem}
+.actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.4rem}
+.btn{font:600 1rem var(--sans);padding:.7rem 1.1rem;border-radius:6px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer;text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:hover{color:var(--bg);opacity:.9}
+.btn.ghost:hover{color:var(--timber);border-color:var(--timber)}
+
+/* Platzhalter für Werbung und Partner */
+.ad-slot{margin:2rem 0;border:1px dashed var(--rule);border-radius:6px;padding:1.2rem;color:var(--muted);font-size:.85rem;text-align:center}
+.partner{margin:2rem 0;border-left:3px solid var(--timber);padding:.4rem 0 .4rem 1rem;max-width:44rem}
+.partner p{margin:0 0 .6rem}
+
+/* FAQ */
+.faq{border-top:1px solid var(--rule);max-width:44rem}
+.faq:last-of-type{border-bottom:1px solid var(--rule)}
+.faq summary{cursor:pointer;font-weight:600;padding:.9rem 0;list-style-position:outside}
+.faq div{padding:0 0 1rem;color:var(--ink)}
+
+/* Preistabelle */
+.pricebox{overflow-x:auto;border-top:2px solid var(--ink);max-width:44rem}
+.pricebox table{min-width:420px}
+
+@media print{
+  .site-header,.site-footer,.ad-slot,.partner,.actions,.prose,.faq,.crumbs,.lead{display:none!important}
+  body{background:#fff;color:#000}
+  .tool{grid-template-columns:1fr}
+}
+
+/* Baugenehmigung */
+.bo-picker{display:grid;gap:1rem;max-width:44rem;margin:0 0 1.5rem}
+.bo-picker[hidden]{display:none}
+.bo-tabs{display:flex;gap:1.5rem;border-bottom:1px solid var(--rule)}
+.bo-tabs button{font:600 1.3rem/1 var(--cond);background:none;border:0;color:var(--muted);padding:.7rem 0 .8rem;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.bo-tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--timber)}
+.bo-list{max-width:44rem}
+.bo-intro{color:var(--muted);margin:0 0 .8rem}
+.bo-card{border-top:2px solid var(--ink);padding:1rem 0 1.25rem;margin-top:1rem}
+.bo-card h3{margin:0 0 .3rem;font-size:1.6rem}
+.bo-gesetz{margin:0 0 .8rem;font-weight:600}
+.bo-gesetz span{color:var(--muted);font-weight:400}
+.bo-par{display:grid;grid-template-columns:max-content 1fr;gap:.4rem 1rem;margin:0 0 .9rem}
+.bo-par dt{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.bo-par dd{margin:0}
+.bo-hinweis{color:var(--muted);font-size:.95rem;margin:0 0 .9rem}
+.bo-links{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1rem;margin:0}
+.bo-js .bo-land,.bo-js .bo-card{display:none}
+.bo-js .bo-land.bo-active,.bo-js .bo-card.bo-active{display:block}
+.bo-js .bo-land > h2{display:none}
+.bo-more{margin:.2rem 0 1.5rem}
+@media (max-width:420px){.bo-par{grid-template-columns:1fr;gap:.1rem}.bo-par dd{margin-bottom:.4rem}}
+
+/* Umrechner m³ / Laufmeter */
+.conv{border-top:2px solid var(--ink);margin:1.5rem 0 2rem;padding-top:1rem}
+.conv h3{margin:0 0 .3rem}
+.prose .conv-hint{color:var(--muted);font-size:.95rem;margin:0 0 .9rem}
+.conv-chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 1.1rem}
+.conv-chips button{font:600 .9rem var(--sans);font-variant-numeric:tabular-nums;padding:.4rem .7rem;border-radius:6px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer}
+.conv-chips button:hover{border-color:var(--timber);color:var(--timber)}
+.conv-chips button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.prose .conv-out{margin:1rem 0 0;padding:.8rem 1rem;background:var(--surface);border:1px solid var(--rule);border-radius:6px;font-variant-numeric:tabular-nums}
+
+/* App-Installation (Fußzeile) */
+.site-footer .install{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1rem;color:var(--ink);padding-bottom:.9rem;margin-bottom:1rem;border-bottom:1px solid var(--rule)}
+.site-footer .install[hidden],.btn[hidden]{display:none}
+.site-footer .install .btn{margin:0;padding:.5rem .9rem;font-size:.9rem}
+
+/* Reiter Weihnachtsprojekte */
+.site-header nav a.nav-xmas{color:var(--timber);display:inline-flex;align-items:center;gap:.3em}
+.nav-xmas svg{width:.9em;height:.9em;fill:currentColor;flex:none}
+@media (max-width:640px){
+  .bar{flex-wrap:wrap;row-gap:0;padding-top:.45rem}
+  .site-header nav{width:100%;gap:1.1rem;padding:.35rem 0 .55rem;overflow-x:auto;scrollbar-width:none;font-size:.95rem}
+  .site-header nav::-webkit-scrollbar{display:none}
+  .site-header nav a{white-space:nowrap}
+  html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 6rem)}
+}

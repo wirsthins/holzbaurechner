@@ -1,0 +1,30 @@
+{
+  "id": "/",
+  "name": "Holzbaurechner",
+  "short_name": "Holzbaurechner",
+  "description": "Holzbedarf berechnen für Carport, Terrassenüberdachung, Holzterrasse, Gartenzaun, Hochbeet und Tisch. Mit Holzliste und Kostenüberschlag, auch offline.",
+  "lang": "de",
+  "dir": "ltr",
+  "start_url": "/?quelle=app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F2F3EE",
+  "theme_color": "#F2F3EE",
+  "categories": ["utilities", "productivity"],
+  "icons": [
+    { "src": "/assets/app/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/app/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/app/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Carport-Rechner", "short_name": "Carport", "url": "/carport-rechner/", "icons": [{ "src": "/assets/app/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Terrassenüberdachung-Rechner", "short_name": "Terrassendach", "url": "/terrassenueberdachung-rechner/", "icons": [{ "src": "/assets/app/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Holzterrasse-Rechner", "short_name": "Holzterrasse", "url": "/holzterrasse-rechner/", "icons": [{ "src": "/assets/app/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Gartenzaun-Rechner", "short_name": "Gartenzaun", "url": "/gartenzaun-rechner/", "icons": [{ "src": "/assets/app/icon-192.png", "sizes": "192x192" }] }
+  ],
+  "screenshots": [
+    { "src": "/assets/app/screenshot-mobil.png", "sizes": "780x1688", "type": "image/png", "form_factor": "narrow", "label": "Carport-Rechner mit Holzliste" },
+    { "src": "/assets/app/screenshot-desktop.png", "sizes": "1280x800", "type": "image/png", "form_factor": "wide", "label": "Carport-Rechner mit Plan und Kostenüberschlag" }
+  ]
+}

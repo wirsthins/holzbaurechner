@@ -1,0 +1,27 @@
+<!--meta {"slug":"baugenehmigung","title":"Baugenehmigung für Carport und Terrassenüberdachung: Bauordnungen aller Bundesländer","description":"Welche Bauordnung gilt in deinem Bundesland? Übersicht der Landesbauordnungen in Deutschland und Österreich mit den Paragraphen zu genehmigungsfreien Vorhaben und Links zu den offiziellen Gesetzestexten."} -->
+<p class="crumbs"><a href="/">Holzbaurechner</a> / Baugenehmigung</p>
+<h1>Baugenehmigung nach Bundesland</h1>
+<p class="lead">Ob ein Carport, eine Terrassenüberdachung oder ein Gartenhaus genehmigt werden muss, regelt die Bauordnung deines Bundeslandes. Wähle Land und Bundesland, um die einschlägigen Vorschriften zu sehen.</p>
+
+<div class="bo-picker" hidden>
+  <div class="bo-tabs" role="tablist" aria-label="Land">
+    <button type="button" role="tab" data-tab="de" aria-selected="true">Deutschland</button>
+    <button type="button" role="tab" data-tab="at" aria-selected="false">Österreich</button>
+  </div>
+  <div class="field bo-select">
+    <label for="bo-bundesland">Bundesland</label>
+    <div class="inputbox"><select id="bo-bundesland"></select></div>
+  </div>
+</div>
+
+<div class="bo-list">
+{{BAUORDNUNGEN}}
+</div>
+
+<div class="prose bo-after">
+  <h2>Was bedeutet genehmigungsfrei?</h2>
+  <p>Auch wenn ein Vorhaben keine Baugenehmigung braucht, müssen alle anderen Vorschriften eingehalten werden: Abstandsflächen zum Nachbarn, Festsetzungen im Bebauungsplan, Denkmalschutz und die Vorgaben zur Standsicherheit. Die Grenzen für Größe, Höhe und Lage unterscheiden sich stark zwischen den Bundesländern und ändern sich mit jeder Novelle.</p>
+  <p>Frag vor dem Bau beim Bauamt deiner Gemeinde nach, am besten mit einer Skizze und den geplanten Maßen. Die Auskunft ist meist kostenlos und schützt vor teuren Überraschungen wie einem Rückbau.</p>
+  <p class="sub">Stand der Übersicht: {{BAUO_STAND}}. Alle Angaben ohne Gewähr. Maßgeblich ist immer der aktuelle Gesetzestext und die Auskunft der zuständigen Behörde.</p>
+</div>
+<script src="/assets/baugenehmigung.js" defer></script>
