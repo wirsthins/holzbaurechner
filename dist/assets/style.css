@@ -171,3 +171,16 @@ tfoot td{font-weight:600;border-bottom:0}
   .site-header nav a{white-space:nowrap}
   html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 6rem)}
 }
+
+/* Weihnachts-Countdown über der Kopfzeile */
+.xmas-bar{background:var(--timber-soft);border-bottom:1px solid var(--rule);font-size:.92rem}
+.xmas-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.2rem 1.25rem;min-height:2.3rem;padding-block:.35rem;text-decoration:none;color:var(--ink)}
+.xmas-inner:hover{color:var(--ink)}
+.xmas-count b{font:700 1.15em/1 var(--cond);font-variant-numeric:tabular-nums}
+.xmas-clock{color:var(--timber)}
+.xl-short{display:none}
+.xmas-star{color:var(--timber)}
+.xmas-link{font-weight:600;color:var(--timber);white-space:nowrap}
+.xmas-inner:hover .xmas-link{text-decoration:underline;text-underline-offset:3px}
+@media (max-width:480px){.xmas-clock,.xl-long{display:none}.xl-short{display:inline}.xmas-inner{gap:.15rem .8rem}}
+@media print{.xmas-bar{display:none!important}}

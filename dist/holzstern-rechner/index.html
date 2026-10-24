@@ -31,12 +31,40 @@
 <meta name="apple-mobile-web-app-title" content="Holzbaurechner">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preload" href="/assets/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=98807892b9">
+<link rel="stylesheet" href="/assets/style.css?v=9f8aa20cca">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Holzstern bauen","url":"https://www.holzbaurechner.de/holzstern-rechner/","applicationCategory":"UtilitiesApplication","operatingSystem":"Alle","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Wie lang müssen die Latten für einen Holzstern sein?","acceptedAnswer":{"@type":"Answer","text":"Beim Drudenfuß ist jede Latte so lang wie der Stern von Spitze zu Spitze breit ist. Für einen Stern mit 1 m Breite brauchst du also fünf Latten à 1 m. Beim Umriss-Stern ist jede Latte deutlich kürzer, bei 1 m Breite rund 38 cm."}},{"@type":"Question","name":"In welchem Winkel werden die Latten geschnitten?","acceptedAnswer":{"@type":"Answer","text":"Beim Drudenfuß werden die Enden im Winkel von 36° zur Längsachse geschnitten. Beim Umriss-Stern sind es an den Spitzen 18° und an den Innenecken 54°."}},{"@type":"Question","name":"Welche Latten eignen sich für einen großen Stern?","acceptedAnswer":{"@type":"Answer","text":"Für Sterne bis etwa 1,5 m reichen Latten mit 2,4 × 4,8 cm. Größere Sterne wirken mit breiteren Latten ab 7 cm stimmiger und werden stabiler."}}]}</script>
 <!-- Platzhalter: Hier kommen später Cookie-Banner (zertifizierte CMP) und AdSense-Script hin. -->
 </head>
 <body>
+<!-- Weihnachts-Countdown: erscheint automatisch vom 1. November bis 26. Dezember. Testen mit ?countdown-test=2026-11-20 -->
+<div class="xmas-bar" id="xmas-bar" hidden>
+  <a class="wrap xmas-inner" href="/weihnachtsprojekte/">
+    <span class="xmas-count"></span>
+    <span class="xmas-link"><span class="xl-long">Weihnachtsprojekte aus Holz</span><span class="xl-short">Projekte</span> <span aria-hidden="true">→</span></span>
+  </a>
+</div>
+<script>
+(function(){
+  var bar=document.getElementById('xmas-bar'), out=bar.querySelector('.xmas-count');
+  var test=(location.search.match(/[?&]countdown-test=(\d{4}-\d{2}-\d{2})/)||[])[1];
+  var offset=test?new Date(test+'T12:00:00')-new Date():0;
+  var p=function(n){return (n<10?'0':'')+n;};
+  function tick(){
+    var now=new Date(Date.now()+offset), y=now.getFullYear();
+    var start=new Date(y,10,1), eve=new Date(y,11,24), end=new Date(y,11,27);
+    if(now<start||now>=end){bar.hidden=true;return false;}
+    bar.hidden=false;
+    if(now>=eve){out.innerHTML='Frohe Weihnachten! <span class="xmas-star" aria-hidden="true">★</span>';return false;}
+    var s=Math.floor((eve-now)/1000), d=Math.floor(s/86400); s-=d*86400;
+    var h=Math.floor(s/3600), m=Math.floor(s%3600/60), sec=s%60;
+    out.innerHTML=d===0?'Heiligabend ist morgen! Noch <b class="xmas-clock">'+p(h)+':'+p(m)+':'+p(sec)+'</b>'
+      :'Noch <b>'+d+'</b> '+(d===1?'Tag':'Tage')+' <b class="xmas-clock">'+p(h)+':'+p(m)+':'+p(sec)+'</b> bis Heiligabend';
+    return true;
+  }
+  if(tick()) setInterval(tick,1000);
+})();
+</script>
 <header class="site-header">
   <div class="wrap bar">
     <a class="brand" href="/"><svg class="brand-logo" viewBox="3 3 26 26" aria-hidden="true" focusable="false"><rect x="3" y="3" width="26" height="26" rx="4" fill="#A8661F"/><circle cx="16" cy="16" r="8" fill="none" stroke="#EBDABF" stroke-width="2"/><circle cx="16" cy="16" r="3.5" fill="none" stroke="#EBDABF" stroke-width="2"/></svg>Holzbaurechner</a>
