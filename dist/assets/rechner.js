@@ -12,7 +12,7 @@ const pieceVar=(name,b,h,lens)=>{const sum=lens.reduce((a,x)=>a+x,0), mx=Math.ma
   return {name,b,h,len:sum/lens.length,qty:lens.length,vol:b/100*h/100*sum,lens,
     lenLabel:Math.abs(mx-mn)<.005?null:`${fmt(mn)} bis ${fmt(mx)} m`};};
 /* Plattenware und Zubehör, das nicht nach m³ gerechnet wird */
-const extra=(label,menge,cost)=>({label,menge,cost});
+const extra=(label,menge,cost,est=true)=>({label,menge,cost,est});
 const PLATTE={b:2.5,h:1.25};
 const platten=(m2)=>Math.ceil(m2*1.1/(PLATTE.b*PLATTE.h)-1e-9);
 /* Wie viele Handelslängen braucht man für alle Zuschnitte? (einfaches Packen, 5 mm Sägeschnitt) */
@@ -525,6 +525,55 @@ const PROJECTS={
         plan:{title:'Ansicht von vorne',w:W,h:H,items:it,unit:'cm',maxH:260}};
     }
   }
+  ,
+  /* ---------- Möbel aus Paletten ---------- */
+  palettenbett:{
+    label:'Palettenbett', postLabel:'Palettenklötze', round:1, mattress:true, copyLabel:'Materialliste kopieren',
+    fields:[
+      {id:'MB',label:'Matratzenbreite',unit:'cm',min:80,max:200,step:10,value:160},
+      {id:'ML',label:'Matratzenlänge',unit:'cm',min:190,max:220,step:10,value:200},
+      {id:'LG',label:'Lagen übereinander',unit:'Stück',min:1,max:3,step:1,value:2},
+      {id:'RD',label:'Rand um die Matratze (mindestens)',unit:'cm',min:0,max:40,step:5,value:0},
+      {id:'PP',label:'Preis pro Palette',unit:'€',min:0,max:40,step:1,value:12}
+    ],
+    option:'Mit Kopfteil aus aufgestellten Paletten',
+    calc(v,kopf){
+      const W=v.MB/100, L=v.ML/100, r=v.RD/100, PH=.144, lag=Math.round(v.LG);
+      const opts=[[.8,1.2,'längs'],[1.2,.8,'quer']].map(([pw,pl,t])=>{const nW=Math.ceil((W+2*r)/pw-1e-9), nL=Math.ceil((L+2*r)/pl-1e-9);
+        return {pw,pl,t,nW,nL,n:nW*nL,area:nW*pw*nL*pl};});
+      const o=opts.sort((a,b)=>a.n-b.n||a.area-b.area)[0];
+      const FW=o.nW*o.pw, FL=o.nL*o.pl, per=o.n, nk=kopf?Math.ceil(FW/.8-1e-9):0, total=per*lag+nk;
+      const H=lag*PH, sw=(FW-W)/2, sk=r, sf=FL-L-r; // Matratze liegt am Kopfende, Platz bleibt am Fußende
+      const joints=(o.nW-1)*o.nL+o.nW*(o.nL-1);
+      const hw=joints*lag*2*.6+(lag-1)*per*4*.25+per*4*.3+nk*2*1.5+6;
+      const extras=[extra('Europaletten',`${total} Stück à ${v.PP} €`,total*v.PP,false),
+        extra('Schleifpapier und Hartwachsöl',`für ${total} Paletten`,8+total*2.5)];
+      /* Draufsicht: Kopfende oben. Deckbretter laufen in Richtung der 1,20 m */
+      const DB=[[0,.145],[.18625,.1],[.3275,.145],[.51375,.1],[.655,.145]], it=[];
+      for(let i=0;i<o.nW;i++) for(let j=0;j<o.nL;j++){const x0=i*o.pw, y0=j*o.pl;
+        DB.forEach(([a,b])=>it.push(o.pl===1.2?{k:'board',x:x0+a,y:y0,w:b,h:1.2}:{k:'board',x:x0,y:y0+a,w:1.2,h:b}));}
+      it.push({k:'mattress',x:sw,y:sk,w:W,h:L});
+      if(kopf) for(let i=0;i<nk;i++) it.push({k:'beam',x:i*.8,y:-PH,w:.8,h:PH});
+      /* Seitenansicht entlang der Matratze, Kopfende links */
+      const s2=[], kl=o.pl===1.2?[0,.6-.0725,1.2-.145]:[0,.4-.0725,.8-.145];
+      for(let k=0;k<lag;k++){const z=k*PH;
+        for(let j=0;j<o.nL;j++){const x=j*o.pl;
+          s2.push({k:'board',x:x+.005,z,w:o.pl-.01,h:.022});
+          kl.forEach(b=>s2.push({k:'post',x:x+b,z:z+.022,w:.145,h:.078}));
+          s2.push({k:'board',x:x+.005,z:z+.1,w:o.pl-.01,h:.022},{k:'board',x:x+.005,z:z+.122,w:o.pl-.01,h:.022});}}
+      s2.push({k:'mattress',x:sk,z:H,w:L,h:.2});
+      if(kopf) s2.push({k:'beam',x:-PH,z:0,w:PH,h:1.2});
+      return {pieces:[],extras,hw,hwLabel:'Flachverbinder, Schrauben, Möbelgleiter'+(kopf?', Winkel':''),
+        sub:`${total} Europaletten mit 120 × 80 cm und Pflegematerial.`,
+        summary:[[String(total),'Europaletten'],[`${cm(FW*100)} × ${cm(FL*100)} cm`,'Stellfläche'],[`${cm(Math.round(H*1000)/10)} cm`,'Höhe ohne Matratze'],[`ca. ${total*25} kg`,'Gewicht']],
+        notes:[`${per} Paletten pro Lage (${o.nW} × ${o.nL}, ${o.t} zum Bett verlegt), ${lag} ${lag===1?'Lage':'Lagen'}${kopf?`, dazu ${nk} hochkant aufgestellte Paletten als Kopfteil (1,20 m hoch)`:''}.`,
+          sw<.005&&sf<.005&&sk<.005?'Die Paletten schließen bündig mit der Matratze ab.':'Die Matratze liegt am Kopfende. Freier Rand: '+[sw>=.005?`seitlich je ${Math.round(sw*100)} cm`:'',sk>=.005?`am Kopfende ${Math.round(sk*100)} cm`:'',sf>=.005?`am Fußende ${Math.round(sf*100)} cm`:''].filter(Boolean).join(', ')+'. Der Rand eignet sich als Ablage statt Nachttisch.',
+          `Liegehöhe mit einer 20 cm hohen Matratze etwa ${Math.round((H+.2)*100)} cm. Für einen LED-Streifen rund um den Unterbau brauchst du ${fmt(2*(FW+FL),1)} m.`,
+          'Nur Paletten mit HT-Stempel (hitzebehandelt) nehmen, keine mit MB. Vor dem Einbau gründlich reinigen, trocknen lassen und abschleifen.'],
+        plan:{w:FW,h:FL,top:kopf?-PH-.02:0,items:it},
+        side:{w:FL,x0:kopf?-PH-.03:0,dimW:FL,zTop:kopf?1.2:H+.2,items:s2,right:H}};
+    }
+  }
 };
 
 /* Kopfband unter 45°: am Pfosten senkrecht, an der Pfette waagrecht abgeschnitten, damit beide Enden bündig anliegen.
@@ -574,7 +623,8 @@ function planSvg(plan,label){
   const W=(x1-x0)*s+padL+padR, H=(bot-top)*s+padT+padB;
   const X=x=>padL+(x-x0)*s, Y=y=>padT+(y-top)*s;
   const pst={beam:'fill="var(--timber-soft)" stroke="var(--timber)" stroke-width=".8"',post:'fill="var(--plan)"',
-    hidden:'fill="none" stroke="var(--muted)" stroke-dasharray="3 2"',outline:'fill="none" stroke="var(--muted)" stroke-dasharray="4 3"'};
+    hidden:'fill="none" stroke="var(--muted)" stroke-dasharray="3 2"',outline:'fill="none" stroke="var(--muted)" stroke-dasharray="4 3"',
+    mattress:'fill="var(--plan)" fill-opacity=".14" stroke="var(--plan)" stroke-width="1.5" stroke-dasharray="5 3"'};
   pst.board=pst.beam;
   let g='';
   for(const i of plan.items){
@@ -586,6 +636,7 @@ function planSvg(plan,label){
     else if(i.k==='post') g+=`<rect ${a} fill="var(--plan)"/>`;
     else if(i.k==='hidden') g+=`<rect ${a} fill="none" stroke="var(--muted)" stroke-dasharray="3 2"/>`;
     else if(i.k==='wall') g+=`<rect ${a} fill="var(--muted)"/>`;
+    else if(i.k==='mattress') g+=`<rect ${a} ${pst.mattress} rx="3"/>`;
   }
   const x1d=X(0), x2=X(plan.w), y1=Y(0), y2=Y(plan.h), t='font-size="12" fill="var(--ink)" font-family="Barlow, system-ui, sans-serif"';
   g+=`<path d="M${x1d} 14H${x2}M${x1d} 9V19M${x2} 9V19M18 ${y1}V${y2}M13 ${y1}H23M13 ${y2}H23" stroke="var(--muted)"/>`;
@@ -603,7 +654,7 @@ function sideSvg(v,label){
   const X=x=>r(padL+(x-x0)*s), Y=z=>r(padT+(zt-z)*s);
   const st={beam:'fill="var(--timber-soft)" stroke="var(--timber)" stroke-width=".8"',
     post:'fill="var(--plan)"', hidden:'fill="none" stroke="var(--muted)" stroke-dasharray="3 2"',
-    wall:'fill="var(--rule)"'};
+    wall:'fill="var(--rule)"', mattress:'fill="var(--plan)" fill-opacity=".14" stroke="var(--plan)" stroke-width="1.5" stroke-dasharray="5 3"'};
   st.board=st.beam;
   let g='';
   for(const i of v.items){
@@ -633,8 +684,8 @@ function sideSvg(v,label){
 function mount(root){
   const key=root.dataset.rechner, p=PROJECTS[key];
   if(!p) return;
-  const woods=p.woods.filter(k=>PREISE[k]);
-  const s={vals:Object.fromEntries(p.fields.map(f=>[f.id,f.value])),wood:woods[0],price:PREISE[woods[0]].preis,waste:10,opt:false};
+  const woods=(p.woods||[]).filter(k=>PREISE[k]), hasWood=woods.length>0, copyLabel=p.copyLabel||'Holzliste kopieren';
+  const s={vals:Object.fromEntries(p.fields.map(f=>[f.id,f.value])),wood:woods[0],price:hasWood?PREISE[woods[0]].preis:0,waste:10,opt:false};
   root.innerHTML=`
   <div class="tool">
     <section aria-label="Eingaben">
@@ -642,19 +693,19 @@ function mount(root){
       <div class="fields"></div>
       <div class="plan"><h2 class="plan-title">Draufsicht</h2><div class="plan-svg"></div>
         <h2 class="side-title">Seitenansicht</h2><div class="side-svg"></div>
-        <div class="legend">${p.postLabel===null?'':`<span><i class="sw" style="background:var(--plan)"></i>${p.postLabel||'Pfosten'}</span>`}<span><i class="sw" style="background:var(--timber-soft);border:1px solid var(--timber)"></i>Balken, Bretter</span><span><i class="sw" style="border:1px dashed var(--muted)"></i>verdeckt oder Umriss</span></div>
+        <div class="legend">${p.postLabel===null?'':`<span><i class="sw" style="background:var(--plan)"></i>${p.postLabel||'Pfosten'}</span>`}<span><i class="sw" style="background:var(--timber-soft);border:1px solid var(--timber)"></i>Balken, Bretter</span><span><i class="sw" style="border:1px dashed var(--muted)"></i>verdeckt oder Umriss</span>${p.mattress?'<span><i class="sw" style="background:color-mix(in srgb,var(--plan) 14%,transparent);border:1.5px dashed var(--plan)"></i>Matratze</span>':''}</div>
       </div>
     </section>
     <section aria-label="Ergebnis" aria-live="polite">
       <h2>Kostenüberschlag</h2>
-      <div class="total"></div><p class="sub"></p>
+      <div class="total"></div><p class="sub"></p><dl class="stats" hidden></dl>
       <div class="tablebox"><table>
         <thead><tr><th>Bauteil</th><th>Querschnitt</th><th class="num">Länge</th><th class="num">Stück</th><th class="num">m³</th></tr></thead>
         <tbody></tbody><tfoot><tr><td colspan="4">Summe ohne Verschnitt</td><td class="num vol"></td></tr></tfoot>
       </table></div>
       <dl class="costlines"></dl>
       <ul class="notes"></ul>
-      <div class="actions"><button class="btn copy" type="button">Holzliste kopieren</button><button class="btn ghost print" type="button">Drucken oder als PDF speichern</button></div>
+      <div class="actions"><button class="btn copy" type="button">${copyLabel}</button><button class="btn ghost print" type="button">Drucken oder als PDF speichern</button></div>
     </section>
   </div>`;
   const q=sel=>root.querySelector(sel), fields=q('.fields');
@@ -669,13 +720,15 @@ function mount(root){
     return d;
   }
   p.fields.forEach(f=>fields.appendChild(numField(f.id,f.label,f.unit,s.vals[f.id],f.min,f.max,f.step,x=>s.vals[f.id]=x)));
-  const w=document.createElement('div'); w.className='field wide';
-  w.innerHTML=`<label for="${key}_wood">Holzart</label><div class="inputbox"><select id="${key}_wood">${woods.map(k=>`<option value="${k}">${PREISE[k].label}</option>`).join('')}</select></div>`;
-  fields.appendChild(w);
-  const pf=numField('price','Holzpreis','€/m³',s.price,100,10000,10,x=>s.price=x);
-  fields.appendChild(pf);
-  fields.appendChild(numField('waste','Verschnitt','%',s.waste,0,40,1,x=>s.waste=x));
-  w.querySelector('select').addEventListener('change',e=>{s.wood=e.target.value;s.price=PREISE[s.wood].preis;pf.querySelector('input').value=s.price;update();});
+  if(hasWood){
+    const w=document.createElement('div'); w.className='field wide';
+    w.innerHTML=`<label for="${key}_wood">Holzart</label><div class="inputbox"><select id="${key}_wood">${woods.map(k=>`<option value="${k}">${PREISE[k].label}</option>`).join('')}</select></div>`;
+    fields.appendChild(w);
+    const pf=numField('price','Holzpreis','€/m³',s.price,100,10000,10,x=>s.price=x);
+    fields.appendChild(pf);
+    fields.appendChild(numField('waste','Verschnitt','%',s.waste,0,40,1,x=>s.waste=x));
+    w.querySelector('select').addEventListener('change',e=>{s.wood=e.target.value;s.price=PREISE[s.wood].preis;pf.querySelector('input').value=s.price;update();});
+  }
   if(p.option){
     const c=document.createElement('label'); c.className='check';
     c.innerHTML=`<input type="checkbox"> ${p.option}`;
@@ -689,11 +742,14 @@ function mount(root){
     const vol=r.pieces.reduce((a,x)=>a+x.vol,0), volW=vol*(1+s.waste/100), wood=volW*s.price;
     const total=wood+r.hw+ex.reduce((a,x)=>a+x.cost,0);
     q('.total').textContent=`${E(total*.85)} bis ${E(total*1.15)}`;
-    q('.sub').textContent=`${fmt(volW,3)} m³ ${PREISE[s.wood].label} inklusive ${s.waste} % Verschnitt. Die Spanne von ±15 % deckt regionale Preisunterschiede ab.`;
+    q('.sub').textContent=(r.sub||(hasWood?`${fmt(volW,3)} m³ ${PREISE[s.wood].label} inklusive ${s.waste} % Verschnitt.`:''))+' Die Spanne von ±15 % deckt regionale Preisunterschiede ab.';
+    const sm=r.summary||[]; q('.stats').hidden=!sm.length;
+    q('.stats').innerHTML=sm.map(([v,l])=>`<div><dt>${l}</dt><dd>${v}</dd></div>`).join('');
+    q('.tablebox').hidden=!r.pieces.length;
     q('tbody').innerHTML=r.pieces.map(x=>`<tr><td class="name">${x.name}</td><td><span class="qs">${qsIcon(x.b,x.h)}${cm(x.b)} × ${cm(x.h)} cm</span></td><td class="num">${x.lenLabel||fmt(x.len)+' m'}</td><td class="num">${x.qty}</td><td class="num">${fmt(x.vol,3)}</td></tr>`).join('');
     q('.vol').textContent=fmt(vol,3);
-    q('.costlines').innerHTML=`<dt>Holz (${fmt(volW,3)} m³ × ${s.price.toLocaleString('de-DE')} €)</dt><dd>${E(wood)}</dd>`+
-      ex.map(x=>`<dt>${x.label}: ${x.menge} (Schätzung)</dt><dd>${E(x.cost)}</dd>`).join('')+
+    q('.costlines').innerHTML=(hasWood&&vol?`<dt>Holz (${fmt(volW,3)} m³ × ${s.price.toLocaleString('de-DE')} €)</dt><dd>${E(wood)}</dd>`:'')+
+      ex.map(x=>`<dt>${x.label}: ${x.menge}${x.est===false?'':' (Schätzung)'}</dt><dd>${E(x.cost)}</dd>`).join('')+
       `<dt>${r.hwLabel} (Schätzung)</dt><dd>${E(r.hw)}</dd>`;
     q('.notes').innerHTML=r.notes.map(n=>`<li>${n}</li>`).join('');
     q('.plan-title').hidden=q('.plan-svg').hidden=!r.plan;
@@ -705,13 +761,14 @@ function mount(root){
   }
   q('.copy').addEventListener('click',async e=>{
     const {r,volW,total}=last, btn=e.currentTarget, E=n=>eur(n,p.round||10);
-    const text=[`Holzliste ${p.label} (${PREISE[s.wood].label})`,
+    const text=[hasWood?`Holzliste ${p.label} (${PREISE[s.wood].label})`:`Materialliste ${p.label}`,
+      ...(r.summary||[]).map(([v,l])=>`${l}: ${v}`),
       ...r.pieces.map(x=>`${x.qty} × ${x.name}, ${cm(x.b)} × ${cm(x.h)} cm, `+(x.lens?x.lens.map(l=>cm(l*100)).join(' / ')+' cm':fmt(x.len)+' m')),
-      `Gesamt: ${fmt(volW,3)} m³ inkl. ${s.waste} % Verschnitt`,
+      ...(volW?[`Gesamt: ${fmt(volW,3)} m³ inkl. ${s.waste} % Verschnitt`]:[]),
       ...(r.extras||[]).map(x=>`${x.label}: ${x.menge}`),
       `Kostenüberschlag: ${E(total*.85)} bis ${E(total*1.15)}`].join('\n');
     try{await navigator.clipboard.writeText(text);btn.textContent='Kopiert';}catch{btn.textContent='Kopieren nicht möglich';}
-    setTimeout(()=>btn.textContent='Holzliste kopieren',1800);
+    setTimeout(()=>btn.textContent=copyLabel,1800);
   });
   q('.print').addEventListener('click',()=>window.print());
   update();

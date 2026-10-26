@@ -184,3 +184,9 @@ tfoot td{font-weight:600;border-bottom:0}
 .xmas-inner:hover .xmas-link{text-decoration:underline;text-underline-offset:3px}
 @media (max-width:480px){.xmas-clock,.xl-long{display:none}.xl-short{display:inline}.xmas-inner{gap:.15rem .8rem}}
 @media print{.xmas-bar{display:none!important}}
+
+/* Kennzahlen über der Materialliste (z. B. Anzahl Paletten) */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(7rem,1fr));gap:.9rem 1.2rem;margin:0 0 1.4rem;border-top:2px solid var(--ink);padding-top:.8rem}
+.stats div{min-width:0}
+.stats dt{font-size:.85rem;color:var(--muted)}
+.stats dd{margin:.15rem 0 0;font:700 1.5rem/1.05 var(--cond);font-variant-numeric:tabular-nums}
