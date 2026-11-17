@@ -75,7 +75,21 @@ const PROJECTS={
           s2.push({k:'beam',x:0,z:v.H,w:v.L,h:pfh});
           for(let i=0;i<ns;i++) s2.push({k:'beam',x:i*sGap,z:zP,w:sw,h:sh});
           return {w:v.L,zTop:zP+sh,items:s2,right:v.H};
-        })()};
+        })(),
+        /* 3D: x = Länge, y = Breite, z = Höhe (m) */
+        model:()=>{
+          const pfh=pf[1]/100, sw=sp[0]/100, sh=sp[1]/100, zP=v.H+pfh, bw=.1, d=Math.min(.9/Math.SQRT2-bw*Math.SQRT2,(a-pp)*.35), M=[];
+          [o,v.B-o].forEach(y=>{
+            for(let i=0;i<n;i++){const cx=o+i*a;
+              M.push({n:'Pfosten',c:'post',box:[cx-pp/2,y-pp/2,0,cx+pp/2,y+pp/2,v.H]});
+              if(i<n-1) M.push({n:'Kopfbänder',c:'brace',prism:{plane:'xz',pts:kopfband(cx+pp/2,v.H,d,bw,1).pts,at:y-bw/2,t:bw}});
+              if(i>0) M.push({n:'Kopfbänder',c:'brace',prism:{plane:'xz',pts:kopfband(cx-pp/2,v.H,d,bw,-1).pts,at:y-bw/2,t:bw}});}
+            M.push({n:'Pfetten',c:'purlin',box:[0,y-pw/2,v.H,v.L,y+pw/2,zP]});
+          });
+          for(let i=0;i<ns;i++) M.push({n:'Sparren',c:'rafter',box:[i*sGap,0,zP,i*sGap+sw,v.B,zP+sh]});
+          M.push({n:'Dacheindeckung (nicht in der Liste)',c:'glass',hull:1,box:[0,0,zP+sh,v.L,v.B,zP+sh+.02]});
+          return {parts:M,hull:'Dacheindeckung zeigen',person:[v.L-1.1,v.B/2],front:'x'};
+        }};
     }
   },
   terrassendach:{
@@ -124,7 +138,23 @@ const PROJECTS={
             {k:'beam',x:0,z:zb(.08)-.16,w:.08,h:.16},
             {k:'beam',pts:[[0,zb(0)],[v.D,zb(v.D)],[v.D,zb(v.D)+sv],[0,zb(0)+sv]]}
           ]};
-        })()};
+        })(),
+        /* 3D: x = entlang der Hauswand, y = Abstand von der Wand, z = Höhe (m) */
+        model:()=>{
+          const pfh=pf[1]/100, sw=sp[0]/100, sh=sp[1]/100, tn=Math.tan(Math.acos(1/slope)), xp=v.D-o;
+          const zb=y=>v.H+pfh+tn*(xp-y), sv=sh*slope, top=zb(0)+sv, bw=.1, d=Math.min(.9/Math.SQRT2-bw*Math.SQRT2,(a-pp)*.35), M=[];
+          M.push({n:'Hauswand',c:'wall',env:1,box:[-.4,-.3,0,v.W+.4,0,top+.4]});
+          for(let i=0;i<n;i++){const cx=o+i*a;
+            M.push({n:'Pfosten',c:'post',box:[cx-pp/2,xp-pp/2,0,cx+pp/2,xp+pp/2,v.H]});
+            if(i<n-1) M.push({n:'Kopfbänder',c:'brace',prism:{plane:'xz',pts:kopfband(cx+pp/2,v.H,d,bw,1).pts,at:xp-bw/2,t:bw}});
+            if(i>0) M.push({n:'Kopfbänder',c:'brace',prism:{plane:'xz',pts:kopfband(cx-pp/2,v.H,d,bw,-1).pts,at:xp-bw/2,t:bw}});}
+          M.push({n:'Pfette vorne',c:'purlin',box:[0,xp-pw/2,v.H,v.W,xp+pw/2,v.H+pfh]},
+            {n:'Wandbalken',c:'plate',box:[0,0,zb(.08)-.16,v.W,.08,zb(.08)]});
+          const rp=[[0,zb(0)],[v.D,zb(v.D)],[v.D,zb(v.D)+sv],[0,zb(0)+sv]];
+          for(let i=0;i<ns;i++) M.push({n:'Sparren',c:'rafter',prism:{plane:'yz',pts:rp,at:i*sGap,t:sw}});
+          M.push({n:'Dacheindeckung (nicht in der Liste)',c:'glass',hull:1,prism:{plane:'yz',pts:[[0,zb(0)+sv],[v.D,zb(v.D)+sv],[v.D,zb(v.D)+sv+.02],[0,zb(0)+sv+.02]],at:0,t:v.W}});
+          return {parts:M,hull:'Dacheindeckung zeigen',person:[o+a/2,Math.max(.6,v.D*.3)]};
+        }};
     }
   },
   hochbeet:{
@@ -377,7 +407,42 @@ const PROJECTS={
           'Eine Tür in der Rückwand baust du aus den Profilbrettern. Fenster, Strom und Beleuchtung sind nicht enthalten.',
           'Auf dem Markt die Hütte mit Gewichten oder Erdankern gegen Wind sichern. Dauerhaft im Garten gehört sie auf Punktfundamente.'],
         plan:{w:v.L,h:v.T,bottom:v.T+.1,items:it},
-        side:{title:'Giebelansicht',x0:-ue-.05,w:v.T+ue+.05,dimW:v.T,zTop:first+sv,items:s2,right:v.H}};
+        side:{title:'Giebelansicht',x0:-ue-.05,w:v.T+ue+.05,dimW:v.T,zTop:first+sv,items:s2,right:v.H},
+        /* 3D: x = Breite, y = Tiefe (Front bei y = T), z = Höhe (m) */
+        model:()=>{
+          const L=v.L, T=v.T, H=v.H, fb=pf[0]/100, fh=pf[1]/100, M=[], sw=.06, ox=(L-Lo)/2, zo=zT+ho;
+          const B=(n,c,box,more)=>M.push(Object.assign({n,c,box},more||{}));
+          B('Schwellen längs','plate',[0,0,0,L,p,.08]); B('Schwellen längs','plate',[0,T-p,0,L,T,.08]);
+          B('Schwellen und Rähm quer','plate',[0,p,0,p,T-p,.08]); B('Schwellen und Rähm quer','plate',[L-p,p,0,L,T-p,.08]);
+          for(let i=0;i<nf;i++) B('Pfosten','post',[i*af,0,.08,i*af+p,p,.08+hp]);
+          B('Pfosten','post',[0,T-p,.08,p,T,H-fh]); B('Pfosten','post',[L-p,T-p,.08,L,T,H-fh]);
+          if(T>2.5){B('Pfosten','post',[0,T/2-p/2,.08,p,T/2+p/2,.08+hp]); B('Pfosten','post',[L-p,T/2-p/2,.08,L,T/2+p/2,.08+hp]);}
+          B('Rähm hinten','purlin',[0,0,H-.08,L,p,H]);
+          B('Schwellen und Rähm quer','plate',[0,p,H-.08,p,T-fb,H]); B('Schwellen und Rähm quer','plate',[L-p,p,H-.08,L,T-fb,H]);
+          B('Rähm vorne (über der Öffnung)','purlin',[0,T-fb,H-fh,L,T,H]);
+          B('Riegel','brace',[p,0,1.06,L-p,.06,1.14]); B('Riegel','brace',[p,T-.06,zT-.12,L-p,T,zT-.04]);
+          B('Riegel','brace',[0,p,1.06,.06,T-p,1.14]); B('Riegel','brace',[L-.06,p,1.06,L,T-p,1.14]);
+          const rl=[[-ue,sp(-ue)],[T/2,sp(T/2)],[T/2,sp(T/2)+sv],[-ue,sp(-ue)+sv]], rr=rl.map(([y,z])=>[T-y,z]);
+          for(let i=0;i<ns;i++){const x=-ug+i*sa, kx=i<ns-1?x+sw:x-.04;
+            M.push({n:'Sparren',c:'rafter',prism:{plane:'yz',pts:rl,at:x,t:sw}},{n:'Sparren',c:'rafter',prism:{plane:'yz',pts:rr,at:x,t:sw}});
+            B('Kehlbalken','brace',[kx,T/4-.05,H+a*T/4,kx+.04,3*T/4+.05,H+a*T/4+.1]);}
+          B('Thekenbrett','plate',[-.05,T-.22,zT-.04,L+.05,T+.08,zT]);
+          /* Klappe oben angeschlagen, geöffnet als Vordach */
+          const hy=T+.04, th=78*DEG, ey=hy+ho*Math.sin(th), ez=zo-ho*Math.cos(th), nx=Math.cos(th)*.04, nz=Math.sin(th)*.04;
+          M.push({n:'Verkaufsklappe',c:'board',prism:{plane:'yz',pts:[[hy,zo+.02],[ey,ez+.02],[ey+nx,ez+.02+nz],[hy+nx,zo+.02+nz]],at:ox,t:Lo}});
+          if(boden){const n2=Math.ceil((L-2*p)/.5-1e-9);
+            for(let i=0;i<=n2;i++){const x=p+i*(L-2*p-.06)/n2; B('Lagerhölzer Boden','brace',[x,p,0,x+.06,T-p,.08]);}
+            B('OSB-Boden','osb',[p,p,.08,L-p,T-p,.102]);}
+          /* Hülle: Profilbretter und Dach */
+          const g=[[0,0],[T,0],[T,H],[T/2,H+a*T/2],[0,H]], wz=H-.002;
+          B('Profilbretter','board',[0,-.02,0,L,0,wz],{hull:1});
+          M.push({n:'Profilbretter',c:'board',hull:1,prism:{plane:'yz',pts:g,at:-.02,t:.02}},{n:'Profilbretter',c:'board',hull:1,prism:{plane:'yz',pts:g,at:L,t:.02}});
+          M.push({n:'Profilbretter',c:'board',hull:1,prism:{plane:'xz',pts:[[0,0],[L,0],[L,wz],[0,wz]],holes:[[[ox,zT-.04],[ox+Lo,zT-.04],[ox+Lo,zo],[ox,zo]]],at:T,t:.02}});
+          const dk=.035/co, rf=[[-ue,sp(-ue)+sv],[T/2,sp(T/2)+sv],[T/2,sp(T/2)+sv+dk],[-ue,sp(-ue)+sv+dk]];
+          M.push({n:'Dach (OSB, Dachpappe)',c:'roof',hull:1,prism:{plane:'yz',pts:rf,at:-ug,t:L+2*ug}},
+            {n:'Dach (OSB, Dachpappe)',c:'roof',hull:1,prism:{plane:'yz',pts:rf.map(([y,z])=>[T-y,z]),at:-ug,t:L+2*ug}});
+          return {parts:M,hull:'Verkleidung und Dach zeigen',person:[L*.3,T+1.1]};
+        }};
     }
   },
   krippe:{
@@ -758,6 +823,26 @@ function mount(root){
     const sti=q('.side-title'); sti.hidden=!r.side; sti.textContent=(r.side&&r.side.title)||'Seitenansicht'; sti.classList.toggle('first',!r.plan);
     q('.side-svg').innerHTML=r.side?sideSvg(r.side,p.label):'';
     last={r,volW,total};
+    if(v3&&r.model) v3.update(r.model());
+  }
+  /* 3D-Ansicht: wird erst nachgeladen, wenn sie in die Nähe des sichtbaren Bereichs kommt */
+  let v3=null;
+  if(p.calc(s.vals,s.opt).model){
+    const box=document.createElement('section'); box.className='v3d'; box.setAttribute('aria-label','3D-Ansicht');
+    box.innerHTML='<h2>3D-Ansicht</h2><div class="v3d-host"><div class="v3d-stage"><p class="v3d-msg">3D-Ansicht wird geladen …</p></div></div>';
+    q('.tool').appendChild(box);
+    const fail=t=>{const m=box.querySelector('.v3d-msg'); if(m) m.textContent=t;};
+    const load=()=>{
+      let imp; try{imp=new Function('u','return import(u)');}catch(e){fail('Dein Browser kann die 3D-Ansicht nicht darstellen.');return;}
+      imp(window.ANSICHT3D||'/assets/ansicht3d.js').then(m=>{
+        v3=m.create(box.querySelector('.v3d-host'),{label:p.label});
+        if(last&&last.r.model) v3.update(last.r.model());
+      }).catch(()=>fail('Die 3D-Ansicht konnte nicht geladen werden. Draufsicht und Seitenansicht oben zeigen die Maße.'));
+    };
+    if('IntersectionObserver' in window){
+      const io=new IntersectionObserver(e=>{if(e.some(x=>x.isIntersecting)){io.disconnect();load();}},{rootMargin:'300px'});
+      io.observe(box);
+    } else load();
   }
   q('.copy').addEventListener('click',async e=>{
     const {r,volW,total}=last, btn=e.currentTarget, E=n=>eur(n,p.round||10);
