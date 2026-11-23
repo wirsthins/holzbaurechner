@@ -88,7 +88,7 @@ const PROJECTS={
           });
           for(let i=0;i<ns;i++) M.push({n:'Sparren',c:'rafter',box:[i*sGap,0,zP,i*sGap+sw,v.B,zP+sh]});
           M.push({n:'Dacheindeckung (nicht in der Liste)',c:'glass',hull:1,box:[0,0,zP+sh,v.L,v.B,zP+sh+.02]});
-          return {parts:M,hull:'Dacheindeckung zeigen',person:[v.L-1.1,v.B/2],front:'x'};
+          return {parts:M,hull:'Dacheindeckung zeigen',person:[v.L/2,v.B/2],front:'x'};
         }};
     }
   },
@@ -637,6 +637,60 @@ const PROJECTS={
           'Nur Paletten mit HT-Stempel (hitzebehandelt) nehmen, keine mit MB. Vor dem Einbau gründlich reinigen, trocknen lassen und abschleifen.'],
         plan:{w:FW,h:FL,top:kopf?-PH-.02:0,items:it},
         side:{w:FL,x0:kopf?-PH-.03:0,dimW:FL,zTop:kopf?1.2:H+.2,items:s2,right:H}};
+    }
+  }
+  ,
+  weinkiste:{
+    label:'Weinkiste', postLabel:'Kopfstücke', round:1,
+    fields:[
+      {id:'L',label:'Länge (außen)',unit:'cm',min:20,max:100,step:1,value:50},
+      {id:'B',label:'Breite (außen)',unit:'cm',min:15,max:60,step:1,value:33},
+      {id:'H',label:'Höhe (außen)',unit:'cm',min:8,max:45,step:1,value:18},
+      {id:'BB',label:'Brettbreite',unit:'cm',min:5,max:20,step:.5,value:9},
+      {id:'N',label:'Anzahl Kisten',unit:'Stück',min:1,max:20,step:1,value:1}
+    ],
+    woods:['fichte','eiche','laerche'],
+    option:'Mit Trennwand in der Mitte',
+    calc(v,trenn){
+      const L=v.L/100, B=v.B/100, H=v.H/100, bw=v.BB/100, N=Math.round(v.N);
+      const ts=.018, tl=.01, tb=.01, hk=H-tb;
+      const rows=Math.ceil(hk/bw-1e-9), ws=hk/rows, nb=Math.ceil(B/bw-1e-9), wb=B/nb; // Bretter gleichmäßig breit sägen
+      const pieces=[
+        piece('Kopfstücke (Stirnseiten)',1.8,Math.round(hk*1000)/10,B-2*tl,2*N),
+        piece('Seitenbretter',1,Math.round(ws*1000)/10,L,2*rows*N),
+        piece('Bodenbretter',1,Math.round(wb*1000)/10,L,nb*N)
+      ];
+      if(trenn) pieces.push(piece('Trennwand',1.2,Math.round(hk*1000)/10,B-2*tl,N));
+      const lm=(2*rows+nb)*L*N, Li=L-2*ts, Bi=B-2*tl, Hi=hk;
+      const griff=hk>=.1, gw=Math.min(.1,(B-2*tl)*.45), gz=H-.03;
+      const fl=Bi>=.305&&Hi>=.08?Math.floor((Li-(trenn?.012:0))/.076):0;
+      /* Draufsicht */
+      const it=[{k:'outline',x:0,y:0,w:L,h:B},{k:'board',x:0,y:0,w:L,h:tl},{k:'board',x:0,y:B-tl,w:L,h:tl},
+        {k:'post',x:0,y:tl,w:ts,h:B-2*tl},{k:'post',x:L-ts,y:tl,w:ts,h:B-2*tl}];
+      if(trenn) it.push({k:'board',x:L/2-.006,y:tl,w:.012,h:B-2*tl});
+      /* Längsseite */
+      const s2=[{k:'board',x:0,z:0,w:L,h:tb}];
+      for(let r=0;r<rows;r++) s2.push({k:'board',x:0,z:tb+r*ws,w:L,h:ws});
+      s2.push({k:'hidden',x:0,z:tb,w:ts,h:hk},{k:'hidden',x:L-ts,z:tb,w:ts,h:hk});
+      if(trenn) s2.push({k:'hidden',x:L/2-.006,z:tb,w:.012,h:hk});
+      return {pieces,hw:N*1.5+2,hwLabel:'Drahtstifte, Holzleim',
+        summary:[[`${v.L} × ${v.B} × ${v.H} cm`,'Außenmaß'],[`${cm(Li*100)} × ${cm(Bi*100)} × ${cm(Hi*100)} cm`,'Innenmaß'],[`${fmt(lm,1)} m`,`Brett ${cm(v.BB)} cm breit`]],
+        notes:[`Pro Kiste ${rows} Seitenbretter je Längsseite und ${nb} Bodenbretter, dazu zwei Kopfstücke mit 1,8 cm Stärke.${ws<bw-.001||wb<bw-.001?` Die ${cm(v.BB)} cm breiten Bretter werden gleichmäßig schmaler gesägt: Seiten auf ${cm(Math.round(ws*1000)/10)} cm, Boden auf ${cm(Math.round(wb*1000)/10)} cm.`:''}`,
+          hk>.2?`Die Kopfstücke sind ${cm(Math.round(hk*1000)/10)} cm hoch. Breitere Bretter gibt es selten, also aus zwei Brettern verleimen oder fertiges Leimholz nehmen.`:'Die Kopfstücke schneidest du aus einem Brett mit passender Breite oder aus Leimholz.',
+          griff?`Grifflöcher: in jedes Kopfstück mittig ein Langloch von etwa ${cm(Math.round(gw*100))} × 3 cm sägen, 3 cm unter der Oberkante. Zwei Löcher bohren und mit der Stichsäge verbinden.`:'Für Grifflöcher ist die Kiste zu niedrig.',
+          fl?`Passt für etwa ${fl} Weinflaschen liegend in einer Lage (Ø 7,5 cm, 30 cm lang).`:'Für liegende Weinflaschen ist die Kiste zu schmal, als Deko- oder Pflanzkiste passt sie trotzdem.',
+          'Für den typischen Look die Kanten brechen, mit Antikbeize oder Flämmen dunkler machen und eine Schrift mit Schablone aufbringen. Beize, Farbe und Folie für Pflanzen sind nicht enthalten.'],
+        plan:{w:L,h:B,items:it,unit:'cm',maxH:170},
+        side:{title:'Längsseite',w:L,zTop:H,items:s2,unit:'cm'},
+        model:()=>{
+          const M=[];
+          for(let i=0;i<nb;i++){const y0=i*wb; M.push({n:'Bodenbretter',c:'board',box:[0,y0,0,L,y0+wb-.002,tb]});}
+          [0,B-tl].forEach(y=>{for(let r=0;r<rows;r++){const z0=tb+r*ws; M.push({n:'Seitenbretter',c:'board',box:[0,y,z0,L,y+tl,z0+ws-.002]});}});
+          const hole=griff?[[[B/2-gw/2,gz-.03],[B/2+gw/2,gz-.03],[B/2+gw/2,gz],[B/2-gw/2,gz]]]:[];
+          [0,L-ts].forEach(x=>M.push({n:'Kopfstücke',c:'plate',prism:{plane:'yz',pts:[[tl,tb],[B-tl,tb],[B-tl,H],[tl,H]],holes:hole,at:x,t:ts}}));
+          if(trenn) M.push({n:'Trennwand',c:'osb',box:[L/2-.006,tl,tb,L/2+.006,B-tl,H-.01]});
+          return {parts:M,front:'x'};
+        }};
     }
   }
 };

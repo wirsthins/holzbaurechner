@@ -1,0 +1,26 @@
+{
+  "id": "/en/",
+  "name": "Holzbaurechner – Timber Calculator",
+  "short_name": "Timber Calc",
+  "description": "Work out the timber for a carport, patio cover, decking, garden fence, raised bed or table. With cutting list and cost estimate, also offline.",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": "/en/?source=app",
+  "scope": "/en/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F2F3EE",
+  "theme_color": "#F2F3EE",
+  "categories": ["utilities", "productivity"],
+  "icons": [
+    { "src": "/assets/app/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/app/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/app/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Carport calculator", "short_name": "Carport", "url": "/en/carport-calculator/", "icons": [{ "src": "/assets/app/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Patio cover calculator", "short_name": "Patio cover", "url": "/en/patio-cover-calculator/", "icons": [{ "src": "/assets/app/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Decking calculator", "short_name": "Decking", "url": "/en/decking-calculator/", "icons": [{ "src": "/assets/app/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Fence calculator", "short_name": "Fence", "url": "/en/fence-calculator/", "icons": [{ "src": "/assets/app/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

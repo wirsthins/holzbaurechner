@@ -1,13 +1,27 @@
 /* Service Worker für die Holzbaurechner-App.
    build.js setzt Version und Dateiliste ein und legt die Datei als /sw.js ab.
    Seiten: erst Netz (max. 3 s), sonst gespeicherte Fassung. Dateien unter /assets/: aus dem Speicher. */
-const VERSION = '04bf470d88';
+const VERSION = '50f16a6b39';
 const PRECACHE = [
   "/",
   "/adventskalender-rechner/",
   "/baugenehmigung/",
   "/carport-rechner/",
   "/datenschutz/",
+  "/en/",
+  "/en/about/",
+  "/en/carport-calculator/",
+  "/en/contact/",
+  "/en/deck-joist-calculator/",
+  "/en/decking-calculator/",
+  "/en/fence-calculator/",
+  "/en/legal-notice/",
+  "/en/pallet-bed-calculator/",
+  "/en/patio-cover-calculator/",
+  "/en/privacy/",
+  "/en/raised-bed-calculator/",
+  "/en/table-calculator/",
+  "/en/wine-crate-calculator/",
   "/gartenzaun-rechner/",
   "/gluehweinhuette-rechner/",
   "/hochbeet-rechner/",
@@ -25,13 +39,18 @@ const PRECACHE = [
   "/ueber/",
   "/unterkonstruktion-rechner/",
   "/weihnachtsprojekte/",
+  "/weinkiste-rechner/",
   "/werben/",
   "/manifest.webmanifest",
-  "/assets/ansicht3d.js?v=d9cff6a552",
+  "/en/manifest.webmanifest",
+  "/assets/ansicht3d.en.js?v=6c8ed296d2",
+  "/assets/ansicht3d.js?v=9d68000450",
+  "/assets/app.en.js?v=89673920e6",
   "/assets/app.js?v=5bbbf6045d",
   "/assets/baugenehmigung.js?v=0fdd6b17fd",
-  "/assets/rechner.js?v=8b720beb36",
-  "/assets/style.css?v=c6774f54fd",
+  "/assets/rechner.en.js?v=f78c66a242",
+  "/assets/rechner.js?v=574a103f5a",
+  "/assets/style.css?v=da22e72ca7",
   "/assets/umrechner.js?v=e76a54c311",
   "/assets/fonts/barlow-400.woff2",
   "/assets/fonts/barlow-600.woff2",
@@ -65,7 +84,7 @@ self.addEventListener('fetch', event => {
 
   if (req.mode === 'navigate') {
     event.respondWith(seite(event));
-  } else if (url.pathname.startsWith('/assets/') || url.pathname === '/manifest.webmanifest') {
+  } else if (url.pathname.startsWith('/assets/') || url.pathname.endsWith('/manifest.webmanifest')) {
     event.respondWith(datei(req));
   }
 });
@@ -87,7 +106,7 @@ async function seite(event) {
     if (res) return res;
     return await netz;
   } catch (e) {
-    return (await gespeichert()) || (await cache.match('/')) || Response.error();
+    return (await gespeichert()) || (await cache.match(new URL(req.url).pathname.startsWith('/en/') ? '/en/' : '/')) || Response.error();
   }
 }
 

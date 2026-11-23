@@ -213,3 +213,7 @@ tfoot td{font-weight:600;border-bottom:0}
 .v3d-legend i{width:.75rem;height:.75rem;border-radius:2px;display:inline-block;border:1px solid rgba(0,0,0,.25)}
 .v3d-hint{font-size:.85rem;color:var(--muted);margin:.6rem 0 0}
 @media print{.v3d{break-inside:avoid}.v3d-bar,.v3d-hint{display:none!important}.v3d-stage{height:9cm}}
+/* Sprachumschalter im Kopf (DE/EN) */
+.site-header nav a.nav-lang{color:var(--muted);font-weight:400}
+/* Englische Seiten: Auswahl Währung/Land */
+.region-foot select{font:inherit;color:inherit;background:var(--surface,transparent);border:1px solid var(--rule);border-radius:4px;padding:.1rem .3rem}
