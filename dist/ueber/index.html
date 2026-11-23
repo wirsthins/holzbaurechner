@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Über Holzbaurechner: Wer die Rechner macht und wie sie rechnen</title>
+<meta name="description" content="Wer hinter Holzbaurechner steht, wie die Holzrechner aufgebaut sind, woher die Holzpreise kommen und wo die Grenzen der Ergebnisse liegen.">
+<meta name="google-site-verification" content="q3nmyFGAMjP9E9qpX0r6z7J99PNcLP3t9Ao8IGy-Ck4">
+<meta name="google-adsense-account" content="ca-pub-7731198570876743">
+<meta name="p:domain_verify" content="180385e73c96d646fb5050b4cc7c44bf">
+<link rel="canonical" href="https://www.holzbaurechner.de/ueber/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Über Holzbaurechner: Wer die Rechner macht und wie sie rechnen">
+<meta property="og:description" content="Wer hinter Holzbaurechner steht, wie die Holzrechner aufgebaut sind, woher die Holzpreise kommen und wo die Grenzen der Ergebnisse liegen.">
+<meta property="og:url" content="https://www.holzbaurechner.de/ueber/">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="Holzbaurechner">
+<meta property="og:image" content="https://www.holzbaurechner.de/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Holzbaurechner: Holzbedarf berechnen für Carport, Terrassendach, Hochbeet und Tisch">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<!-- App (PWA) -->
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/assets/app/apple-touch-icon.png">
+<meta name="theme-color" content="#F2F3EE" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121A16" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Holzbaurechner">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preload" href="/assets/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/style.css?v=c6774f54fd">
+
+<!-- AdSense: Script hier einfügen, sobald in AdSense unter „Datenschutz & Mitteilungen“ die Mitteilung für europäische Vorschriften aktiv ist. -->
+</head>
+<body>
+<!-- Weihnachts-Countdown: erscheint automatisch vom 1. November bis 26. Dezember. Testen mit ?countdown-test=2026-11-20 -->
+<div class="xmas-bar" id="xmas-bar" hidden>
+  <a class="wrap xmas-inner" href="/weihnachtsprojekte/">
+    <span class="xmas-count"></span>
+    <span class="xmas-link"><span class="xl-long">Weihnachtsprojekte aus Holz</span><span class="xl-short">Projekte</span> <span aria-hidden="true">→</span></span>
+  </a>
+</div>
+<script>
+(function(){
+  var bar=document.getElementById('xmas-bar'), out=bar.querySelector('.xmas-count');
+  var test=(location.search.match(/[?&]countdown-test=(\d{4}-\d{2}-\d{2})/)||[])[1];
+  var offset=test?new Date(test+'T12:00:00')-new Date():0;
+  var p=function(n){return (n<10?'0':'')+n;};
+  function tick(){
+    var now=new Date(Date.now()+offset), y=now.getFullYear();
+    var start=new Date(y,10,1), eve=new Date(y,11,24), end=new Date(y,11,27);
+    if(now<start||now>=end){bar.hidden=true;return false;}
+    bar.hidden=false;
+    if(now>=eve){out.innerHTML='Frohe Weihnachten! <span class="xmas-star" aria-hidden="true">★</span>';return false;}
+    var s=Math.floor((eve-now)/1000), d=Math.floor(s/86400); s-=d*86400;
+    var h=Math.floor(s/3600), m=Math.floor(s%3600/60), sec=s%60;
+    out.innerHTML=d===0?'Heiligabend ist morgen! Noch <b class="xmas-clock">'+p(h)+':'+p(m)+':'+p(sec)+'</b>'
+      :'Noch <b>'+d+'</b> '+(d===1?'Tag':'Tage')+' <b class="xmas-clock">'+p(h)+':'+p(m)+':'+p(sec)+'</b> bis Heiligabend';
+    return true;
+  }
+  if(tick()) setInterval(tick,1000);
+})();
+</script>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="/"><svg class="brand-logo" viewBox="3 3 26 26" aria-hidden="true" focusable="false"><rect x="3" y="3" width="26" height="26" rx="4" fill="#A8661F"/><circle cx="16" cy="16" r="8" fill="none" stroke="#EBDABF" stroke-width="2"/><circle cx="16" cy="16" r="3.5" fill="none" stroke="#EBDABF" stroke-width="2"/></svg>Holzbaurechner</a>
+    <nav aria-label="Hauptnavigation">
+      <a href="/#rechner">Rechner</a>
+      <a href="/holzpreise/">Holzpreise</a>
+      <a class="nav-xmas" href="/weihnachtsprojekte/"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.5l2.6 6.1 6.6.5-5 4.3 1.6 6.4L12 16.4l-5.7 3.4 1.6-6.4-5-4.3 6.6-.5z"/></svg>Weihnachtsprojekte</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<p class="crumbs"><a href="/">Holzbaurechner</a> / Über</p>
+<h1>Über Holzbaurechner</h1>
+<p class="lead">Kostenlose Rechner für Holzprojekte, damit du schon bei der Planung weißt, wie viel Holz du brauchst und was es ungefähr kostet.</p>
+
+<div class="prose">
+  <h2>Wer dahintersteht</h2>
+  <p>Holzbaurechner wird von Theo-Phil Penner aus Innsbruck betrieben. Ich bin Maurermeister und kenne die Fragen, die vor jedem Bauprojekt kommen: Welche Querschnitte brauche ich, wie viele Balken und Bretter, und was kostet das Holz dafür? Genau diese Fragen sollen die Rechner schnell und ohne Anmeldung beantworten.</p>
+
+  <h2>Wie die Rechner arbeiten</h2>
+  <p>Jeder Rechner geht von einer bewährten Grundkonstruktion aus, zum Beispiel einem Carport mit Pfosten, Pfetten und Sparren oder einem Hochbeet mit liegenden Brettern und Eckpfosten. Aus deinen Maßen leitet der Rechner die einzelnen Bauteile ab: Querschnitt, Länge und Stückzahl. Daraus ergibt sich die Holzmenge in Kubikmetern und mit dem Preis pro m³ und einem Verschnittzuschlag der Kostenüberschlag.</p>
+  <p>Wie die jeweilige Konstruktion aufgebaut ist, steht auf jeder Rechnerseite direkt unter dem Rechner. So kannst du nachvollziehen, womit gerechnet wird, und das Ergebnis mit deinem eigenen Plan vergleichen.</p>
+
+  <h2>Woher die Holzpreise kommen</h2>
+  <p>Die hinterlegten Preise sind Beispielwerte für den Holzhandel in Deutschland und Österreich, pro Kubikmeter inklusive Mehrwertsteuer. Das Datum, auf dem sie beruhen, steht auf der Seite <a href="/holzpreise/">Holzpreise</a>. Holzpreise schwanken je nach Region, Händler, Qualität und Menge. In jedem Rechner kannst du deshalb deinen eigenen Preis eintragen, zum Beispiel aus dem Angebot deines Händlers.</p>
+
+  <h2>Wo die Grenzen liegen</h2>
+  <p>Die Querschnitte sind Richtwerte für die Planung und den Holzeinkauf. Sie ersetzen keine statische Berechnung. Gerade bei Carports und Überdachungen hängen die nötigen Querschnitte von Schneelast, Windlast und Spannweite am Standort ab. Ob du eine Genehmigung brauchst, regelt die Bauordnung deines Bundeslands; eine Übersicht findest du unter <a href="/baugenehmigung/">Baugenehmigung nach Bundesland</a>.</p>
+
+  <h2>Kostenlos und ohne Anmeldung</h2>
+  <p>Alle Rechner sind kostenlos. Die Website finanziert sich über Werbung. Die Anzeigen haben keinen Einfluss auf die Ergebnisse der Rechner, und es gibt keine bezahlten Empfehlungen für bestimmte Händler oder Produkte. Deine Eingaben bleiben in deinem Browser und werden nicht gespeichert. Details stehen in der <a href="/datenschutz/">Datenschutzerklärung</a>.</p>
+
+  <h2>Fehler gefunden oder ein Projekt fehlt?</h2>
+  <p>Wenn dir ein Rechenfehler auffällt oder du dir einen Rechner für ein weiteres Projekt wünschst, schreib mir gern. Alle Wege findest du auf der Seite <a href="/kontakt/">Kontakt</a>.</p>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Alle Querschnitte sind unverbindliche Richtwerte und ersetzen keine statische Berechnung. Für Carports und Überdachungen sind je nach Region eine Statik und eine Baubewilligung nötig.</p>
+    <p class="install" hidden><span class="install-text">Holzbaurechner als App: liegt auf dem Startbildschirm und rechnet auch ohne Netz.</span> <button class="btn ghost install-btn" type="button" hidden>App installieren</button></p>
+    <p><a href="/baugenehmigung/">Baugenehmigung nach Bundesland</a> <a href="/ueber/">Über</a> <a href="/kontakt/">Kontakt</a> <a href="/werben/">Werben</a> <a href="/impressum/">Impressum</a> <a href="/datenschutz/">Datenschutz</a> <a href="#cookie-einstellungen" class="cookie-settings" hidden>Cookie-Einstellungen</a> <span>© 2026 Holzbaurechner</span></p>
+  </div>
+</footer>
+<script>window.HOLZPREISE = {"stand":"September 2026","hinweis":"Beispielwerte für den Handel in Deutschland und Österreich, pro m³ inkl. MwSt.","hoelzer":{"kvh":{"label":"KVH Fichte (Konstruktionsvollholz)","preis":750,"einsatz":"Pfosten, Balken, Sparren"},"bsh":{"label":"BSH Fichte (Brettschichtholz, Leimbinder)","preis":950,"einsatz":"Pfetten, große Spannweiten"},"laerche":{"label":"Lärche","preis":1250,"einsatz":"Außenbereich ohne Holzschutzmittel"},"douglasie":{"label":"Douglasie","preis":1050,"einsatz":"Außenbereich, Hochbeete, Überdachungen"},"kdi":{"label":"Fichte kesseldruckimprägniert","preis":800,"einsatz":"Gartenbau, Zäune, Hochbeete"},"fichte":{"label":"Fichte gehobelt (Bretter)","preis":800,"einsatz":"Möbel, Innenausbau"},"eiche":{"label":"Eiche (Bretter)","preis":2600,"einsatz":"Tische, hochwertige Möbel"}}}; window.ANSICHT3D = "/assets/ansicht3d.js?v=d9cff6a552";</script>
+<script src="/assets/rechner.js?v=8b720beb36" defer></script>
+<script src="/assets/app.js?v=5bbbf6045d" defer></script>
+<script id="cookie-settings-js">
+(function(){
+  var l=document.querySelector('.cookie-settings'); if(!l) return;
+  l.addEventListener('click',function(e){
+    e.preventDefault();
+    window.googlefc=window.googlefc||{}; googlefc.callbackQueue=googlefc.callbackQueue||[];
+    googlefc.callbackQueue.push(function(){ googlefc.showRevocationMessage(); });
+  });
+  window.addEventListener('load',function(){
+    var n=0, t=setInterval(function(){
+      if(window.googlefc && typeof googlefc.showRevocationMessage==='function'){ l.hidden=false; clearInterval(t); }
+      else if(++n>20) clearInterval(t);
+    },500);
+  });
+})();
+</script>
+</body>
+</html>
