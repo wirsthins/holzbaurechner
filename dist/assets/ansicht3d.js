@@ -142,7 +142,6 @@ export function create(host,{label='Modell'}={}){
     if(active&&!names.some(n=>n[0]===active)) active=null;
     legend.innerHTML=names.map(([n,c])=>`<button type="button" data-n="${esc(n)}" aria-pressed="${n===active}"><i style="background:${mat(c).col}${c==='glass'?';opacity:.6':''}"></i>${esc(n)}</button>`).join('');
     hullBox.hidden=!md.hull; hullBox.querySelector('span').textContent=md.hull||'';
-    personIn.parentElement.hidden=!md.person;
 
     fitFog();
     if(first){first=false; setView('schraeg',false);}
