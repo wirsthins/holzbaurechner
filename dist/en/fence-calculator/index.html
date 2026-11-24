@@ -11,6 +11,7 @@
 <link rel="canonical" href="https://www.holzbaurechner.de/en/fence-calculator/">
 <link rel="alternate" hreflang="de" href="https://www.holzbaurechner.de/gartenzaun-rechner/">
 <link rel="alternate" hreflang="en" href="https://www.holzbaurechner.de/en/fence-calculator/">
+<link rel="alternate" hreflang="en-US" href="https://www.holzbaurechner.de/us/fence-calculator/">
 <link rel="alternate" hreflang="x-default" href="https://www.holzbaurechner.de/en/fence-calculator/">
 
 <meta property="og:type" content="website">
@@ -35,7 +36,7 @@
 <meta name="apple-mobile-web-app-title" content="Holzbaurechner">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preload" href="/assets/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=da22e72ca7">
+<link rel="stylesheet" href="/assets/style.css?v=6d684528f1">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Fence calculator","inLanguage":"en","url":"https://www.holzbaurechner.de/en/fence-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How many fence pales do I need per metre?","acceptedAnswer":{"@type":"Answer","text":"With 70 mm pales and 40 mm gaps you need just over 9 pales per metre. With 20 mm gaps it is 11. The calculator shows the exact number for your fence length."}},{"@type":"Question","name":"How far apart should timber fence posts be?","acceptedAnswer":{"@type":"Answer","text":"Usually 1.8 to 2 m. For tall fences and windy sites, set them closer, because the fence catches more wind."}},{"@type":"Question","name":"Concrete posts in or use post anchors?","acceptedAnswer":{"@type":"Answer","text":"Timber posts concreted into the ground often rot within a few years where timber, concrete and soil meet. On post anchors the timber stays dry, and a post is easy to replace later."}},{"@type":"Question","name":"Do I need to paint the fence?","acceptedAnswer":{"@type":"Answer","text":"No. Larch and Douglas fir last many years untreated and develop a silver-grey patina. If you want to keep the colour of the wood, oil or stain it regularly."}}]}</script>
 <!-- AdSense: Script hier einfügen (dasselbe wie in src/layout.html). -->
@@ -74,6 +75,17 @@
   <h2>How high can a fence be?</h2>
   <p>In England you can usually put up a fence without planning permission if it is no higher than 2 m, or 1 m next to a road or its footpath. Wales has similar limits. Listed buildings, conservation areas and planning conditions can change this, and Scotland, Northern Ireland, Ireland and Australia have their own rules. The <a href="https://www.planningportal.co.uk/permission/common-projects/fences-gates-and-garden-walls/planning-permission" target="_blank" rel="noopener">Planning Portal</a> explains the details for England.</p>
 
+  <aside class="shop" aria-label="Parts on Amazon">
+  <h2>Parts on Amazon</h2>
+  <p class="shop-note">These are paid links. As an Amazon Associate I earn from qualifying purchases. The price you pay stays the same.</p>
+  <ul>
+    <li><a href="https://www.amazon.co.uk/s?k=concrete+in+post+anchor+75mm+galvanised&tag=holzbaurechne-21" target="_blank" rel="sponsored nofollow noopener">Concrete-in post anchors</a> <span class="shop-mark">(paid link)</span><span class="shop-hint">keep posts clear of the soil</span></li>
+    <li><a href="https://www.amazon.co.uk/s?k=fence+post+caps&tag=holzbaurechne-21" target="_blank" rel="sponsored nofollow noopener">Post caps</a> <span class="shop-mark">(paid link)</span><span class="shop-hint">protect the end grain</span></li>
+    <li><a href="https://www.amazon.co.uk/s?k=stainless+steel+wood+screws+A2&tag=holzbaurechne-21" target="_blank" rel="sponsored nofollow noopener">Stainless steel screws</a> <span class="shop-mark">(paid link)</span><span class="shop-hint">for the pales</span></li>
+    <li><a href="https://www.amazon.co.uk/s?k=postcrete&tag=holzbaurechne-21" target="_blank" rel="sponsored nofollow noopener">Postcrete</a> <span class="shop-mark">(paid link)</span><span class="shop-hint">for the post footings</span></li>
+  </ul>
+</aside>
+
   <h2>Frequently asked questions</h2>
 </div>
 <details class="faq"><summary>How many fence pales do I need per metre?</summary><div>With 70 mm pales and 40 mm gaps you need just over 9 pales per metre. With 20 mm gaps it is 11. The calculator shows the exact number for your fence length.</div></details>
@@ -86,6 +98,7 @@
 <footer class="site-footer">
   <div class="wrap">
     <p>All timber sections are guide values and do not replace a structural calculation. Carports and patio covers may need planning permission and building regulations approval, and a structural engineer's check depending on where you live.</p>
+    <p class="affiliate-note">Links marked “paid link” are affiliate links. As an Amazon Associate I earn from qualifying purchases.</p>
     <p class="install" hidden><span class="install-text">Holzbaurechner as an app: sits on your home screen and works offline.</span> <button class="btn ghost install-btn" type="button" hidden>Install app</button></p>
     <p><a href="/en/about/">About</a> <a href="/en/contact/">Contact</a> <a href="/en/legal-notice/">Legal notice</a> <a href="/en/privacy/">Privacy</a> <a href="#cookie-settings" class="cookie-settings" hidden>Cookie settings</a> <a href="/" hreflang="de" lang="de">Deutsch</a> <span class="region-foot"></span> <span>© 2026 Holzbaurechner</span></p>
   </div>
@@ -104,18 +117,34 @@
 })();
 window.ANSICHT3D = "/assets/ansicht3d.en.js?v=6c8ed296d2";
 </script>
-<script src="/assets/rechner.en.js?v=f78c66a242" defer></script>
+<script src="/assets/rechner.en.js?v=1a54f8be69" defer></script>
 <script src="/assets/app.en.js?v=89673920e6" defer></script>
 <script id="region-js">
 /* Auswahl der Region unter jedem Rechner und im Fuß */
 (function(){
   var R=window.HOLZPREISE_REGIONEN||{}, cur=window.HOLZPREISE_REGION;
+  /* US-Fassung in Fuß und Zoll: Gegenstück aus dem hreflang-Link, sonst US-Startseite */
+  var usL=document.querySelector('link[hreflang="en-US"]'), us=usL?new URL(usL.href).pathname:'/us/';
   function pick(){
     var s=document.createElement('select'); s.setAttribute('aria-label','Currency and country for prices');
-    s.innerHTML=Object.keys(R).map(function(k){return '<option value="'+k+'"'+(k===cur?' selected':'')+'>'+R[k].symbol+' · '+R[k].name+'</option>';}).join('');
-    s.addEventListener('change',function(){ var u=new URL(location.href); u.searchParams.set('region',s.value); location.href=u.toString(); });
+    s.innerHTML=Object.keys(R).map(function(k){return '<option value="'+k+'"'+(k===cur?' selected':'')+'>'+R[k].symbol+' · '+R[k].name+'</option>';}).join('')+
+      '<option value="us">$ · United States (feet and inches)</option>';
+    s.addEventListener('change',function(){ if(s.value==='us'){ location.href=us; return; } var u=new URL(location.href); u.searchParams.set('region',s.value); location.href=u.toString(); });
     return s;
   }
+  /* Besucher aus Amerika: Hinweis auf die US-Fassung (einmal wegklickbar) */
+  try{
+    var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';
+    if(tz.indexOf('America/')===0 && !localStorage.getItem('hbr-region') && !localStorage.getItem('hbr-us-hint')){
+      document.addEventListener('DOMContentLoaded',function(){
+        var m=document.querySelector('main'); if(!m) return;
+        var d=document.createElement('p'); d.className='us-hint';
+        d.innerHTML='Building in the US? <a href="'+us+'">Use the version in feet, inches and dollars</a> <button type="button" aria-label="Close">×</button>';
+        d.querySelector('button').addEventListener('click',function(){ try{localStorage.setItem('hbr-us-hint','1');}catch(e){} d.remove(); });
+        m.insertBefore(d,m.firstChild);
+      });
+    }
+  }catch(e){}
   var f=document.querySelector('.region-foot'); if(f){ f.appendChild(document.createTextNode('Prices: ')); f.appendChild(pick()); }
   /* Im Rechner als eigenes Feld bei den Preisen; der Rechner baut sich erst beim Laden auf */
   document.addEventListener('DOMContentLoaded',function(){

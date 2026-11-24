@@ -32,7 +32,7 @@
 <meta name="apple-mobile-web-app-title" content="Holzbaurechner">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preload" href="/assets/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=da22e72ca7">
+<link rel="stylesheet" href="/assets/style.css?v=6d684528f1">
 
 <!-- AdSense: Script hier einfügen (dasselbe wie in src/layout.html). -->
 </head>
@@ -58,7 +58,7 @@
   <h2>In brief</h2>
   <ul>
     <li>The calculators run entirely in your browser. What you enter (sizes, prices) is not sent to a server and is not stored.</li>
-    <li>The website is free and funded by advertising from Google AdSense.</li>
+    <li>The website is free and funded by advertising from Google AdSense and by affiliate links to Amazon.</li>
     <li>Cookies and similar technologies for advertising are only used if you agree in the consent dialog. You can change your decision at any time.</li>
     <li>No analytics or tracking tools such as Google Analytics are used.</li>
   </ul>
@@ -75,6 +75,10 @@
   <p><strong>Legal basis:</strong> Storing and reading information on your device for advertising purposes only happens with your consent (§ 165(3) of the Austrian Telecommunications Act 2021 and § 25(1) of the German TDDDG). The subsequent processing of personal data for personalised advertising is based on your consent under Art. 6(1)(a) GDPR. Where ads are served without consent, the legal basis is the legitimate interest in a free, advertising-funded website (Art. 6(1)(f) GDPR).</p>
   <p><strong>Transfers to third countries:</strong> Google may also transfer data to Google LLC in the USA. Google LLC is certified under the EU-US Data Privacy Framework; Google also uses EU standard contractual clauses.</p>
   <p><strong>Objection and settings:</strong> You can turn off personalised advertising from Google in <a href="https://adssettings.google.com" target="_blank" rel="noopener">Google's ad settings</a>. You can opt out of other vendors' use of cookies for personalised advertising at <a href="https://www.youronlinechoices.eu" target="_blank" rel="noopener">www.youronlinechoices.eu</a> or <a href="https://www.aboutads.info" target="_blank" rel="noopener">www.aboutads.info</a>. Google explains how it uses data on partner websites at <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">policies.google.com/technologies/partner-sites</a>; <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's privacy policy</a> applies in general.</p>
+
+  <h2>Amazon Associates Programme</h2>
+  <p>This website takes part in the Amazon Associates Programme. Some links to products on Amazon are affiliate links and are marked “paid link”. They contain a partner ID that tells Amazon you came from this website. If you then buy something there, I receive a commission. The price you pay stays the same.</p>
+  <p>Loading this website does not send any data to Amazon and does not set any cookies. Only when you click such a link are you taken to Amazon. Amazon may then set cookies and process data under its own privacy policy, in particular to attribute the order to the partner. The legal basis for the links is the legitimate interest in a free, advertising-funded website (Art. 6(1)(f) GDPR). More information is in <a href="https://www.amazon.co.uk/gp/help/customer/display.html?nodeId=201909010" target="_blank" rel="noopener">Amazon's privacy notice</a>.</p>
 
   <h2>Managing consent</h2>
   <p>On your first visit, a consent dialog asks whether you agree to the use of cookies and the processing of data for advertising. The dialog is provided by Google and certified under IAB Europe's Transparency and Consent Framework (TCF). Your decision is stored in a cookie on your device so that the dialog does not appear on every page. The legal basis for this is the legal obligation to be able to prove consent (Art. 6(1)(c) GDPR).</p>
@@ -101,6 +105,7 @@
 <footer class="site-footer">
   <div class="wrap">
     <p>All timber sections are guide values and do not replace a structural calculation. Carports and patio covers may need planning permission and building regulations approval, and a structural engineer's check depending on where you live.</p>
+    <p class="affiliate-note">Links marked “paid link” are affiliate links. As an Amazon Associate I earn from qualifying purchases.</p>
     <p class="install" hidden><span class="install-text">Holzbaurechner as an app: sits on your home screen and works offline.</span> <button class="btn ghost install-btn" type="button" hidden>Install app</button></p>
     <p><a href="/en/about/">About</a> <a href="/en/contact/">Contact</a> <a href="/en/legal-notice/">Legal notice</a> <a href="/en/privacy/">Privacy</a> <a href="#cookie-settings" class="cookie-settings" hidden>Cookie settings</a> <a href="/" hreflang="de" lang="de">Deutsch</a> <span class="region-foot"></span> <span>© 2026 Holzbaurechner</span></p>
   </div>
@@ -119,18 +124,34 @@
 })();
 window.ANSICHT3D = "/assets/ansicht3d.en.js?v=6c8ed296d2";
 </script>
-<script src="/assets/rechner.en.js?v=f78c66a242" defer></script>
+<script src="/assets/rechner.en.js?v=1a54f8be69" defer></script>
 <script src="/assets/app.en.js?v=89673920e6" defer></script>
 <script id="region-js">
 /* Auswahl der Region unter jedem Rechner und im Fuß */
 (function(){
   var R=window.HOLZPREISE_REGIONEN||{}, cur=window.HOLZPREISE_REGION;
+  /* US-Fassung in Fuß und Zoll: Gegenstück aus dem hreflang-Link, sonst US-Startseite */
+  var usL=document.querySelector('link[hreflang="en-US"]'), us=usL?new URL(usL.href).pathname:'/us/';
   function pick(){
     var s=document.createElement('select'); s.setAttribute('aria-label','Currency and country for prices');
-    s.innerHTML=Object.keys(R).map(function(k){return '<option value="'+k+'"'+(k===cur?' selected':'')+'>'+R[k].symbol+' · '+R[k].name+'</option>';}).join('');
-    s.addEventListener('change',function(){ var u=new URL(location.href); u.searchParams.set('region',s.value); location.href=u.toString(); });
+    s.innerHTML=Object.keys(R).map(function(k){return '<option value="'+k+'"'+(k===cur?' selected':'')+'>'+R[k].symbol+' · '+R[k].name+'</option>';}).join('')+
+      '<option value="us">$ · United States (feet and inches)</option>';
+    s.addEventListener('change',function(){ if(s.value==='us'){ location.href=us; return; } var u=new URL(location.href); u.searchParams.set('region',s.value); location.href=u.toString(); });
     return s;
   }
+  /* Besucher aus Amerika: Hinweis auf die US-Fassung (einmal wegklickbar) */
+  try{
+    var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';
+    if(tz.indexOf('America/')===0 && !localStorage.getItem('hbr-region') && !localStorage.getItem('hbr-us-hint')){
+      document.addEventListener('DOMContentLoaded',function(){
+        var m=document.querySelector('main'); if(!m) return;
+        var d=document.createElement('p'); d.className='us-hint';
+        d.innerHTML='Building in the US? <a href="'+us+'">Use the version in feet, inches and dollars</a> <button type="button" aria-label="Close">×</button>';
+        d.querySelector('button').addEventListener('click',function(){ try{localStorage.setItem('hbr-us-hint','1');}catch(e){} d.remove(); });
+        m.insertBefore(d,m.firstChild);
+      });
+    }
+  }catch(e){}
   var f=document.querySelector('.region-foot'); if(f){ f.appendChild(document.createTextNode('Prices: ')); f.appendChild(pick()); }
   /* Im Rechner als eigenes Feld bei den Preisen; der Rechner baut sich erst beim Laden auf */
   document.addEventListener('DOMContentLoaded',function(){

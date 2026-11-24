@@ -1,10 +1,11 @@
 /* Service Worker für die Holzbaurechner-App.
    build.js setzt Version und Dateiliste ein und legt die Datei als /sw.js ab.
    Seiten: erst Netz (max. 3 s), sonst gespeicherte Fassung. Dateien unter /assets/: aus dem Speicher. */
-const VERSION = '50f16a6b39';
+const VERSION = '9f551a68c6';
 const PRECACHE = [
   "/",
   "/adventskalender-rechner/",
+  "/balkonkraftwerk-aufstaenderung-rechner/",
   "/baugenehmigung/",
   "/carport-rechner/",
   "/datenschutz/",
@@ -18,6 +19,8 @@ const PRECACHE = [
   "/en/legal-notice/",
   "/en/pallet-bed-calculator/",
   "/en/patio-cover-calculator/",
+  "/en/plug-in-solar-guide/",
+  "/en/plug-in-solar-planner/",
   "/en/privacy/",
   "/en/raised-bed-calculator/",
   "/en/table-calculator/",
@@ -38,19 +41,34 @@ const PRECACHE = [
   "/tisch-rechner/",
   "/ueber/",
   "/unterkonstruktion-rechner/",
+  "/us/",
+  "/us/about/",
+  "/us/carport-calculator/",
+  "/us/deck-calculator/",
+  "/us/deck-joist-span-calculator/",
+  "/us/fence-calculator/",
+  "/us/pallet-bed-calculator/",
+  "/us/patio-cover-calculator/",
+  "/us/raised-bed-calculator/",
+  "/us/table-calculator/",
+  "/us/wine-crate-calculator/",
   "/weihnachtsprojekte/",
   "/weinkiste-rechner/",
   "/werben/",
   "/manifest.webmanifest",
   "/en/manifest.webmanifest",
+  "/us/manifest.webmanifest",
   "/assets/ansicht3d.en.js?v=6c8ed296d2",
   "/assets/ansicht3d.js?v=9d68000450",
+  "/assets/ansicht3d.us.js?v=ce76a14ab2",
   "/assets/app.en.js?v=89673920e6",
   "/assets/app.js?v=5bbbf6045d",
   "/assets/baugenehmigung.js?v=0fdd6b17fd",
-  "/assets/rechner.en.js?v=f78c66a242",
-  "/assets/rechner.js?v=574a103f5a",
-  "/assets/style.css?v=da22e72ca7",
+  "/assets/rechner.en.js?v=1a54f8be69",
+  "/assets/rechner.js?v=b236fccf76",
+  "/assets/rechner.us.js?v=0e2d430e63",
+  "/assets/solarcheck.js?v=54f6074990",
+  "/assets/style.css?v=6d684528f1",
   "/assets/umrechner.js?v=e76a54c311",
   "/assets/fonts/barlow-400.woff2",
   "/assets/fonts/barlow-600.woff2",
@@ -106,7 +124,7 @@ async function seite(event) {
     if (res) return res;
     return await netz;
   } catch (e) {
-    return (await gespeichert()) || (await cache.match(new URL(req.url).pathname.startsWith('/en/') ? '/en/' : '/')) || Response.error();
+    return (await gespeichert()) || (await cache.match((new URL(req.url).pathname.match(/^\/(en|us)\//) || ['/'])[0])) || Response.error();
   }
 }
 

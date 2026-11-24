@@ -11,6 +11,7 @@
 <link rel="canonical" href="https://www.holzbaurechner.de/en/wine-crate-calculator/">
 <link rel="alternate" hreflang="de" href="https://www.holzbaurechner.de/weinkiste-rechner/">
 <link rel="alternate" hreflang="en" href="https://www.holzbaurechner.de/en/wine-crate-calculator/">
+<link rel="alternate" hreflang="en-US" href="https://www.holzbaurechner.de/us/wine-crate-calculator/">
 <link rel="alternate" hreflang="x-default" href="https://www.holzbaurechner.de/en/wine-crate-calculator/">
 
 <meta property="og:type" content="website">
@@ -35,7 +36,7 @@
 <meta name="apple-mobile-web-app-title" content="Holzbaurechner">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preload" href="/assets/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=da22e72ca7">
+<link rel="stylesheet" href="/assets/style.css?v=6d684528f1">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Wooden wine crate calculator","inLanguage":"en","url":"https://www.holzbaurechner.de/en/wine-crate-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What size is a wine crate?","acceptedAnswer":{"@type":"Answer","text":"A crate for six bottles is around 50 × 33 × 18 cm, for example. For one bottle a narrow box of about 35 × 12 × 12 cm is enough. For the size you enter, the calculator shows how many bottles fit lying in one layer."}},{"@type":"Question","name":"How much timber do I need for a wine crate?","acceptedAnswer":{"@type":"Answer","text":"For a crate of 50 × 33 × 18 cm you need about 4 metres of 90 × 10 mm board for the sides and bottom, plus two end pieces of 31 × 17 cm from an 18 mm board. The material costs very little."}},{"@type":"Question","name":"Nails or screws?","acceptedAnswer":{"@type":"Answer","text":"Real wine crates are nailed. With panel pins and a little wood glue the crate holds well, and the nail heads are part of the look. If you prefer screws, pre-drill the thin boards so they do not split."}},{"@type":"Question","name":"Can I use the crate as a planter?","acceptedAnswer":{"@type":"Answer","text":"Yes. Line it, drill drainage holes in the bottom and stand it on small feet or battens so water can drain. Outdoors, larch lasts longer than spruce."}}]}</script>
 <!-- AdSense: Script hier einfügen (dasselbe wie in src/layout.html). -->
@@ -77,6 +78,17 @@
   <h2>Which timber is best?</h2>
   <p>Planed pine or spruce is light, cheap and takes stain well. Real wine crates are often pine or poplar. Oak looks high quality but is harder to nail and much more expensive. For planters outdoors, larch is the better choice.</p>
 
+  <aside class="shop" aria-label="Parts on Amazon">
+  <h2>Parts on Amazon</h2>
+  <p class="shop-note">These are paid links. As an Amazon Associate I earn from qualifying purchases. The price you pay stays the same.</p>
+  <ul>
+    <li><a href="https://www.amazon.co.uk/s?k=panel+pins+25mm&tag=holzbaurechne-21" target="_blank" rel="sponsored nofollow noopener">Panel pins</a> <span class="shop-mark">(paid link)</span><span class="shop-hint">for sides and bottom</span></li>
+    <li><a href="https://www.amazon.co.uk/s?k=antique+pine+wood+stain&tag=holzbaurechne-21" target="_blank" rel="sponsored nofollow noopener">Antique wood stain</a> <span class="shop-mark">(paid link)</span><span class="shop-hint">for the classic look</span></li>
+    <li><a href="https://www.amazon.co.uk/s?k=forstner+bit+30mm&tag=holzbaurechne-21" target="_blank" rel="sponsored nofollow noopener">Forstner bit</a> <span class="shop-mark">(paid link)</span><span class="shop-hint">for the hand holes</span></li>
+    <li><a href="https://www.amazon.co.uk/s?k=letter+stencils+wood&tag=holzbaurechne-21" target="_blank" rel="sponsored nofollow noopener">Letter stencils</a> <span class="shop-mark">(paid link)</span><span class="shop-hint">for lettering</span></li>
+  </ul>
+</aside>
+
   <h2>Frequently asked questions</h2>
 </div>
 <details class="faq"><summary>What size is a wine crate?</summary><div>A crate for six bottles is around 50 × 33 × 18 cm, for example. For one bottle a narrow box of about 35 × 12 × 12 cm is enough. For the size you enter, the calculator shows how many bottles fit lying in one layer.</div></details>
@@ -89,6 +101,7 @@
 <footer class="site-footer">
   <div class="wrap">
     <p>All timber sections are guide values and do not replace a structural calculation. Carports and patio covers may need planning permission and building regulations approval, and a structural engineer's check depending on where you live.</p>
+    <p class="affiliate-note">Links marked “paid link” are affiliate links. As an Amazon Associate I earn from qualifying purchases.</p>
     <p class="install" hidden><span class="install-text">Holzbaurechner as an app: sits on your home screen and works offline.</span> <button class="btn ghost install-btn" type="button" hidden>Install app</button></p>
     <p><a href="/en/about/">About</a> <a href="/en/contact/">Contact</a> <a href="/en/legal-notice/">Legal notice</a> <a href="/en/privacy/">Privacy</a> <a href="#cookie-settings" class="cookie-settings" hidden>Cookie settings</a> <a href="/" hreflang="de" lang="de">Deutsch</a> <span class="region-foot"></span> <span>© 2026 Holzbaurechner</span></p>
   </div>
@@ -107,18 +120,34 @@
 })();
 window.ANSICHT3D = "/assets/ansicht3d.en.js?v=6c8ed296d2";
 </script>
-<script src="/assets/rechner.en.js?v=f78c66a242" defer></script>
+<script src="/assets/rechner.en.js?v=1a54f8be69" defer></script>
 <script src="/assets/app.en.js?v=89673920e6" defer></script>
 <script id="region-js">
 /* Auswahl der Region unter jedem Rechner und im Fuß */
 (function(){
   var R=window.HOLZPREISE_REGIONEN||{}, cur=window.HOLZPREISE_REGION;
+  /* US-Fassung in Fuß und Zoll: Gegenstück aus dem hreflang-Link, sonst US-Startseite */
+  var usL=document.querySelector('link[hreflang="en-US"]'), us=usL?new URL(usL.href).pathname:'/us/';
   function pick(){
     var s=document.createElement('select'); s.setAttribute('aria-label','Currency and country for prices');
-    s.innerHTML=Object.keys(R).map(function(k){return '<option value="'+k+'"'+(k===cur?' selected':'')+'>'+R[k].symbol+' · '+R[k].name+'</option>';}).join('');
-    s.addEventListener('change',function(){ var u=new URL(location.href); u.searchParams.set('region',s.value); location.href=u.toString(); });
+    s.innerHTML=Object.keys(R).map(function(k){return '<option value="'+k+'"'+(k===cur?' selected':'')+'>'+R[k].symbol+' · '+R[k].name+'</option>';}).join('')+
+      '<option value="us">$ · United States (feet and inches)</option>';
+    s.addEventListener('change',function(){ if(s.value==='us'){ location.href=us; return; } var u=new URL(location.href); u.searchParams.set('region',s.value); location.href=u.toString(); });
     return s;
   }
+  /* Besucher aus Amerika: Hinweis auf die US-Fassung (einmal wegklickbar) */
+  try{
+    var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';
+    if(tz.indexOf('America/')===0 && !localStorage.getItem('hbr-region') && !localStorage.getItem('hbr-us-hint')){
+      document.addEventListener('DOMContentLoaded',function(){
+        var m=document.querySelector('main'); if(!m) return;
+        var d=document.createElement('p'); d.className='us-hint';
+        d.innerHTML='Building in the US? <a href="'+us+'">Use the version in feet, inches and dollars</a> <button type="button" aria-label="Close">×</button>';
+        d.querySelector('button').addEventListener('click',function(){ try{localStorage.setItem('hbr-us-hint','1');}catch(e){} d.remove(); });
+        m.insertBefore(d,m.firstChild);
+      });
+    }
+  }catch(e){}
   var f=document.querySelector('.region-foot'); if(f){ f.appendChild(document.createTextNode('Prices: ')); f.appendChild(pick()); }
   /* Im Rechner als eigenes Feld bei den Preisen; der Rechner baut sich erst beim Laden auf */
   document.addEventListener('DOMContentLoaded',function(){

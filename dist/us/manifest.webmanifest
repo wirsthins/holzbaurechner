@@ -1,0 +1,26 @@
+{
+  "id": "/us/",
+  "name": "Holzbaurechner – Lumber Calculator",
+  "short_name": "Lumber Calc",
+  "description": "Work out the lumber for a deck, fence, patio cover, carport, raised bed or table, in feet and inches. With cut list, shopping list and cost estimate, also offline.",
+  "lang": "en-US",
+  "dir": "ltr",
+  "start_url": "/us/?source=app",
+  "scope": "/us/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F2F3EE",
+  "theme_color": "#F2F3EE",
+  "categories": ["utilities", "productivity"],
+  "icons": [
+    { "src": "/assets/app/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/app/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/app/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Deck calculator", "short_name": "Deck", "url": "/us/deck-calculator/", "icons": [{ "src": "/assets/app/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Fence calculator", "short_name": "Fence", "url": "/us/fence-calculator/", "icons": [{ "src": "/assets/app/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Raised bed calculator", "short_name": "Raised bed", "url": "/us/raised-bed-calculator/", "icons": [{ "src": "/assets/app/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Patio cover calculator", "short_name": "Patio cover", "url": "/us/patio-cover-calculator/", "icons": [{ "src": "/assets/app/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

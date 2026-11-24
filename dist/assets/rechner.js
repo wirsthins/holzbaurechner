@@ -693,6 +693,85 @@ const PROJECTS={
         }};
     }
   }
+  ,
+  /* ---------- Balkonkraftwerk-Aufständerung aus Holz (Garten, Terrasse) ----------
+     Je Bock: Schwelle am Boden, Schrägbalken unter den Modulen, hinterer Pfosten, Strebe; bei mehr Bodenabstand auch vorderer Pfosten.
+     Quer über die Böcke zwei Modulschienen, hinten Windverband zwischen den Böcken.
+     Seitenmaße: x = Tiefe von vorne nach hinten, z = Höhe (m). Im 3D-Modell zusätzlich y = Breite. */
+  solargestell:{
+    label:'Balkonkraftwerk-Aufständerung', postLabel:'Pfosten', round:1,
+    fields:[
+      {id:'N',label:'Anzahl Module',unit:'Stück',min:1,max:4,step:1,value:2},
+      {id:'NW',label:'Neigung',unit:'°',min:10,max:60,step:1,value:30},
+      {id:'ML',label:'Modullänge',unit:'cm',min:100,max:240,step:1,value:172},
+      {id:'MB',label:'Modulbreite',unit:'cm',min:60,max:140,step:1,value:113},
+      {id:'BH',label:'Abstand Modul zum Boden (vorne)',unit:'cm',min:20,max:100,step:5,value:20}
+    ],
+    woods:['laerche','douglasie','kdi'],
+    option:'Module quer (Querformat)',
+    calc(v,quer){
+      const N=Math.round(v.N), a=v.NW*DEG, ca=Math.cos(a), sa=Math.sin(a), ta=Math.tan(a);
+      const along=(quer?v.MB:v.ML)/100, across=(quer?v.ML:v.MB)/100, fuge=.02, W=N*across+(N-1)*fuge;
+      const t=.07, rh=.045, rd=.07, pd=.035;          // Kantholz 7 × 7 cm, Schienen 4,5 × 7 cm flach, Moduldicke
+      const minH=rh+t/ca+t+.005, h0=Math.max(v.BH/100,minH), zt0=h0-rh;   // Oberkante Schrägbalken vorne
+      const T=s=>[s*ca,zt0+s*sa], B=s=>[s*ca+t*sa,zt0+s*sa-t*ca];          // Ober- und Unterkante des Schrägbalkens
+      const under=x=>zt0-t/ca+x*ta;                                          // Unterkante senkrecht über x
+      const sB=Math.max(along-.12,along*.7), xb=sB*ca, hb=under(xb)-t;      // hinterer Pfosten knapp unter dem oberen Ende
+      const xf=.06, hf=under(xf)-t, front=hf>=.05;
+      const xs0=-.1, xs1=xb+t/2+.15, ls=xs1-xs0;                             // Schwelle mit Überstand
+      /* Strebe vom Fuß des hinteren Pfostens schräg nach vorne unter die Mitte des Schrägbalkens */
+      const bx=xb-t/2, bz=t+.03, mx=along*.45*ca, mz=under(mx), lbr=Math.hypot(bx-mx,mz-bz)+.06;
+      const inset=Math.min(.2,W*.15), nb=Math.max(2,Math.ceil((W-2*inset)/1-1e-9)+1), sp=(W-2*inset)/(nb-1);
+      const ld=Math.hypot(sp,hb*.85)+.1;
+      const s1=along*.2, s2=along*.8, top=h0+along*sa+pd*ca, area=N*(v.ML/100)*(v.MB/100);
+      const pieces=[
+        piece('Schwellen',7,7,ls,nb),
+        piece('Schrägbalken',7,7,along,nb),
+        piece('Hintere Pfosten',7,7,hb,nb)
+      ];
+      if(front) pieces.push(piece('Vordere Pfosten',7,7,hf,nb));
+      pieces.push(piece('Streben',4.5,7,lbr,nb),piece('Modulschienen',4.5,7,W,2),piece('Windverband',2.4,7,ld,nb-1));
+      /* Draufsicht: oben = vorne */
+      const it=[], xpos=i=>inset+i*sp;
+      for(let i=0;i<N;i++) it.push({k:'hidden',x:i*(across+fuge),y:0,w:across,h:along*ca});
+      for(let i=0;i<nb;i++){const x=xpos(i)-t/2; it.push({k:'beam',x,y:xs0,w:t,h:ls},{k:'post',x,y:xb-t/2,w:t,h:t}); if(front) it.push({k:'post',x,y:xf-t/2,w:t,h:t});}
+      [s1,s2].forEach(s=>it.push({k:'beam',x:0,y:s*ca-rd/2,w:W,h:rd}));
+      /* Seitenansicht */
+      const beamPts=[T(0),T(along),B(along),B(0)];
+      const railPts=s=>{const n=[-sa*rh,ca*rh],p=T(s-rd/2),q=T(s+rd/2); return [p,q,[q[0]+n[0],q[1]+n[1]],[p[0]+n[0],p[1]+n[1]]];};
+      const panelPts=(()=>{const o=[-sa*rh,ca*rh],n=[-sa*pd,ca*pd],p=T(0),q=T(along);
+        return [[p[0]+o[0],p[1]+o[1]],[q[0]+o[0],q[1]+o[1]],[q[0]+o[0]+n[0],q[1]+o[1]+n[1]],[p[0]+o[0]+n[0],p[1]+o[1]+n[1]]];})();
+      const brace=strip(bx,bz,mx,mz,.07);
+      const s2i=[{k:'beam',x:xs0,z:0,w:ls,h:t},{k:'post',x:xb-t/2,z:t,w:t,h:hb}];
+      if(front) s2i.push({k:'post',x:xf-t/2,z:t,w:t,h:hf});
+      s2i.push({k:'beam',pts:brace},{k:'beam',pts:beamPts},{k:'beam',pts:railPts(s1)},{k:'beam',pts:railPts(s2)},{k:'hidden',pts:panelPts});
+      const raised=h0>v.BH/100+.001;
+      return {pieces,hw:2*(N+1)*3+nb*8+15,hwLabel:'Modulklemmen, Winkelverbinder, Edelstahlschrauben',
+        summary:[[`${cm(W*100)} × ${cm(Math.round(ls*100))} cm`,'Stellfläche'],[`${cm(Math.round(top*100))} cm`,'Höhe oben'],[`${fmt(area)} m²`,'Modulfläche']],
+        notes:[`${nb} Böcke mit ${fmt(sp)} m Achsabstand, zwei Modulschienen bei etwa einem Fünftel und vier Fünfteln der Modullänge.`,
+          'Die Klemmbereiche gibt der Modulhersteller vor. Lage der Schienen danach ausrichten und nur die mitgelieferten oder freigegebenen Modulklemmen verwenden.',
+          'Ballast (z. B. Gehwegplatten auf den Schwellen) oder Erdanker sind nicht enthalten. Wie viel nötig ist, hängt von Windlast, Höhe und Standort ab.',
+          W>4?'Modulschienen über 4 m werden gestoßen. Den Stoß immer über einen Bock legen.':'Schwellen nicht direkt auf die Erde legen, sondern auf Platten oder Kies, damit das Holz abtrocknen kann.',
+          ...(W>9||top>3?['Über 3 m Höhe oder 9 m Länge brauchen freistehende Solaranlagen in den meisten Bundesländern eine Baugenehmigung.']:[]),
+          ...(raised?[`Bei ${v.NW}° braucht der Schrägbalken unter den Schienen Platz: Abstand vorne auf ${cm(Math.round(h0*100))} cm angehoben.`]:[])],
+        plan:{w:W,h:ls,top:xs0,items:it},
+        side:{title:'Seitenansicht',x0:xs0,w:xs1,dimW:xs1-xs0,zTop:top+.05,left:top,items:s2i},
+        model:()=>{
+          const M=[], beamYZ=beamPts.map(([x,z])=>[x,z]);
+          for(let i=0;i<nb;i++){const x=xpos(i), x0=x-t/2;
+            M.push({n:'Schwellen',c:'plate',box:[x0,xs0,0,x0+t,xs1,t]},
+              {n:'Hintere Pfosten',c:'post',box:[x0,xb-t/2,t,x0+t,xb+t/2,t+hb]},
+              {n:'Schrägbalken',c:'rafter',prism:{plane:'yz',pts:beamYZ,at:x0,t}},
+              {n:'Streben',c:'brace',prism:{plane:'yz',pts:brace,at:x-.0225,t:.045}});
+            if(front) M.push({n:'Vordere Pfosten',c:'post',box:[x0,xf-t/2,t,x0+t,xf+t/2,t+hf]});
+            if(i<nb-1){const xa=x+t/2, xc=xpos(i+1)-t/2; M.push({n:'Windverband',c:'board',prism:{plane:'xz',pts:strip(xa,t+.05,xc,t+hb*.9,.07),at:xb+t/2,t:.024}});}
+          }
+          [s1,s2].forEach(s=>{const [y,z]=T(s); M.push({n:'Modulschienen',c:'purlin',box:[0,y-rd/2,z-.01,W,y+rd/2,z+rh-.01]});});
+          for(let i=0;i<N;i++) M.push({n:'Module (nicht in der Liste)',c:'roof',hull:1,prism:{plane:'yz',pts:panelPts,at:i*(across+fuge),t:across}});
+          return {parts:M,hull:'Module zeigen',person:[W+.6,ls/2]};
+        }};
+    }
+  }
 };
 
 /* Kopfband unter 45°: am Pfosten senkrecht, an der Pfette waagrecht abgeschnitten, damit beide Enden bündig anliegen.

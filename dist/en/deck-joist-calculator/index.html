@@ -11,6 +11,7 @@
 <link rel="canonical" href="https://www.holzbaurechner.de/en/deck-joist-calculator/">
 <link rel="alternate" hreflang="de" href="https://www.holzbaurechner.de/unterkonstruktion-rechner/">
 <link rel="alternate" hreflang="en" href="https://www.holzbaurechner.de/en/deck-joist-calculator/">
+<link rel="alternate" hreflang="en-US" href="https://www.holzbaurechner.de/us/deck-joist-span-calculator/">
 <link rel="alternate" hreflang="x-default" href="https://www.holzbaurechner.de/en/deck-joist-calculator/">
 
 <meta property="og:type" content="website">
@@ -35,7 +36,7 @@
 <meta name="apple-mobile-web-app-title" content="Holzbaurechner">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preload" href="/assets/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=da22e72ca7">
+<link rel="stylesheet" href="/assets/style.css?v=6d684528f1">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Deck joist calculator","inLanguage":"en","url":"https://www.holzbaurechner.de/en/deck-joist-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What joist spacing do composite deck boards need?","acceptedAnswer":{"@type":"Answer","text":"Composite boards usually require 350 to 400 mm centres, some products even less. The manufacturer's fitting instructions always decide."}},{"@type":"Question","name":"How many deck pedestals do I need per m²?","acceptedAnswer":{"@type":"Answer","text":"With joists at 500 mm centres and supports every 600 mm, you need just over 3 pedestals per square metre. With two layers it is noticeably fewer."}},{"@type":"Question","name":"Which timber is best for deck joists?","acceptedAnswer":{"@type":"Answer","text":"Larch and Douglas fir are proven, pressure-treated softwood is cheaper. What matters is that the frame does not rot faster than the boards on top. Under hardwood boards, hardwood or aluminium joists are often used for that reason."}},{"@type":"Question","name":"Can I build a deck frame on the lawn?","acceptedAnswer":{"@type":"Answer","text":"Not directly. Remove the turf and topsoil, lay a compacted sub-base of hardcore and gravel and put weed membrane on top. Only then do the pedestals go down."}}]}</script>
 <!-- AdSense: Script hier einfügen (dasselbe wie in src/layout.html). -->
@@ -72,6 +73,17 @@
   <h2>Protecting the timber by design</h2>
   <p>The joists must never sit in water or directly on soil. A sub-base of hardcore and gravel with weed membrane, a fall of 1 to 2 % and enough air under the frame make sure everything dries quickly. The frame should last at least as long as the boards on top.</p>
 
+  <aside class="shop" aria-label="Parts on Amazon">
+  <h2>Parts on Amazon</h2>
+  <p class="shop-note">These are paid links. As an Amazon Associate I earn from qualifying purchases. The price you pay stays the same.</p>
+  <ul>
+    <li><a href="https://www.amazon.co.uk/s?k=adjustable+deck+pedestals&tag=holzbaurechne-21" target="_blank" rel="sponsored nofollow noopener">Adjustable deck pedestals</a> <span class="shop-mark">(paid link)</span><span class="shop-hint">under every joist at each support</span></li>
+    <li><a href="https://www.amazon.co.uk/s?k=rubber+decking+pads&tag=holzbaurechne-21" target="_blank" rel="sponsored nofollow noopener">Rubber deck pads</a> <span class="shop-mark">(paid link)</span><span class="shop-hint">between joists and slabs</span></li>
+    <li><a href="https://www.amazon.co.uk/s?k=weed+control+membrane+heavy+duty&tag=holzbaurechne-21" target="_blank" rel="sponsored nofollow noopener">Weed control membrane</a> <span class="shop-mark">(paid link)</span><span class="shop-hint">on the compacted base</span></li>
+    <li><a href="https://www.amazon.co.uk/s?k=decking+joist+tape&tag=holzbaurechne-21" target="_blank" rel="sponsored nofollow noopener">Joist tape</a> <span class="shop-mark">(paid link)</span><span class="shop-hint">protects the top of the joists</span></li>
+  </ul>
+</aside>
+
   <h2>Frequently asked questions</h2>
 </div>
 <details class="faq"><summary>What joist spacing do composite deck boards need?</summary><div>Composite boards usually require 350 to 400 mm centres, some products even less. The manufacturer's fitting instructions always decide.</div></details>
@@ -84,6 +96,7 @@
 <footer class="site-footer">
   <div class="wrap">
     <p>All timber sections are guide values and do not replace a structural calculation. Carports and patio covers may need planning permission and building regulations approval, and a structural engineer's check depending on where you live.</p>
+    <p class="affiliate-note">Links marked “paid link” are affiliate links. As an Amazon Associate I earn from qualifying purchases.</p>
     <p class="install" hidden><span class="install-text">Holzbaurechner as an app: sits on your home screen and works offline.</span> <button class="btn ghost install-btn" type="button" hidden>Install app</button></p>
     <p><a href="/en/about/">About</a> <a href="/en/contact/">Contact</a> <a href="/en/legal-notice/">Legal notice</a> <a href="/en/privacy/">Privacy</a> <a href="#cookie-settings" class="cookie-settings" hidden>Cookie settings</a> <a href="/" hreflang="de" lang="de">Deutsch</a> <span class="region-foot"></span> <span>© 2026 Holzbaurechner</span></p>
   </div>
@@ -102,18 +115,34 @@
 })();
 window.ANSICHT3D = "/assets/ansicht3d.en.js?v=6c8ed296d2";
 </script>
-<script src="/assets/rechner.en.js?v=f78c66a242" defer></script>
+<script src="/assets/rechner.en.js?v=1a54f8be69" defer></script>
 <script src="/assets/app.en.js?v=89673920e6" defer></script>
 <script id="region-js">
 /* Auswahl der Region unter jedem Rechner und im Fuß */
 (function(){
   var R=window.HOLZPREISE_REGIONEN||{}, cur=window.HOLZPREISE_REGION;
+  /* US-Fassung in Fuß und Zoll: Gegenstück aus dem hreflang-Link, sonst US-Startseite */
+  var usL=document.querySelector('link[hreflang="en-US"]'), us=usL?new URL(usL.href).pathname:'/us/';
   function pick(){
     var s=document.createElement('select'); s.setAttribute('aria-label','Currency and country for prices');
-    s.innerHTML=Object.keys(R).map(function(k){return '<option value="'+k+'"'+(k===cur?' selected':'')+'>'+R[k].symbol+' · '+R[k].name+'</option>';}).join('');
-    s.addEventListener('change',function(){ var u=new URL(location.href); u.searchParams.set('region',s.value); location.href=u.toString(); });
+    s.innerHTML=Object.keys(R).map(function(k){return '<option value="'+k+'"'+(k===cur?' selected':'')+'>'+R[k].symbol+' · '+R[k].name+'</option>';}).join('')+
+      '<option value="us">$ · United States (feet and inches)</option>';
+    s.addEventListener('change',function(){ if(s.value==='us'){ location.href=us; return; } var u=new URL(location.href); u.searchParams.set('region',s.value); location.href=u.toString(); });
     return s;
   }
+  /* Besucher aus Amerika: Hinweis auf die US-Fassung (einmal wegklickbar) */
+  try{
+    var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';
+    if(tz.indexOf('America/')===0 && !localStorage.getItem('hbr-region') && !localStorage.getItem('hbr-us-hint')){
+      document.addEventListener('DOMContentLoaded',function(){
+        var m=document.querySelector('main'); if(!m) return;
+        var d=document.createElement('p'); d.className='us-hint';
+        d.innerHTML='Building in the US? <a href="'+us+'">Use the version in feet, inches and dollars</a> <button type="button" aria-label="Close">×</button>';
+        d.querySelector('button').addEventListener('click',function(){ try{localStorage.setItem('hbr-us-hint','1');}catch(e){} d.remove(); });
+        m.insertBefore(d,m.firstChild);
+      });
+    }
+  }catch(e){}
   var f=document.querySelector('.region-foot'); if(f){ f.appendChild(document.createTextNode('Prices: ')); f.appendChild(pick()); }
   /* Im Rechner als eigenes Feld bei den Preisen; der Rechner baut sich erst beim Laden auf */
   document.addEventListener('DOMContentLoaded',function(){

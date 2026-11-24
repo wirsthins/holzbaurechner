@@ -217,3 +217,32 @@ tfoot td{font-weight:600;border-bottom:0}
 .site-header nav a.nav-lang{color:var(--muted);font-weight:400}
 /* Englische Seiten: Auswahl Währung/Land */
 .region-foot select{font:inherit;color:inherit;background:var(--surface,transparent);border:1px solid var(--rule);border-radius:4px;padding:.1rem .3rem}
+/* Plug-in solar planner (nur englische Seite) */
+.fields [hidden]{display:none!important}
+.sp-verdict{font-size:clamp(1.8rem,5vw,2.4rem)}
+.sp-v-ok{color:var(--plan)}.sp-v-warn{color:var(--timber)}.sp-v-bad{color:#B23A2E}
+.sp-h{font-size:1.05rem;margin:1.4rem 0 .2rem}
+.sp-list{list-style:none;padding:0;margin:.3rem 0 1rem}
+.sp-list li{display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--rule);font-size:.95rem}
+.sp-ico{flex:none;width:1.35rem;height:1.35rem;border-radius:50%;display:inline-grid;place-items:center;font-size:.78rem;font-weight:700;color:#fff;margin-top:.1rem}
+.sp-ok .sp-ico{background:var(--plan)}.sp-warn .sp-ico{background:var(--timber)}.sp-bad .sp-ico{background:#B23A2E}.sp-todo .sp-ico{background:var(--muted)}
+.sp-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+/* Affiliate-Kasten (Amazon) */
+.shop{margin:2rem 0;padding:1rem 1.2rem 1.1rem;border:1px solid var(--rule);border-radius:8px;background:var(--surface)}
+.shop h2{margin:0 0 .3rem;font-size:1.2rem}
+.shop-note{margin:0 0 .6rem;font-size:.85rem;color:var(--muted)}
+.shop ul{list-style:none;padding:0;margin:0}
+.shop li{padding:.45rem 0;border-top:1px solid var(--rule)}
+.shop li:first-child{border-top:0}
+.shop a{font-weight:600}
+.shop-mark{font-size:.8rem;color:var(--muted)}
+.shop-hint{display:block;font-size:.88rem;color:var(--muted)}
+.affiliate-note{font-size:.85rem}
+
+/* Hinweis auf die US-Fassung (englische Seiten, Besucher aus Amerika) */
+.us-hint{margin:1rem 0 0;padding:.6rem .9rem;border:1px solid var(--rule);border-radius:8px;background:var(--surface);font-size:.95rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.us-hint button{margin-left:auto}
+.us-hint button{border:0;background:none;font-size:1.2rem;line-height:1;cursor:pointer;color:var(--muted);padding:0 .2rem}
+/* US-Rechner: Tabellenüberschriften */
+.tablebox caption{text-align:left;font-weight:600;padding:.2rem 0 .4rem;color:var(--ink)}
+.shopbox{margin-top:1rem}

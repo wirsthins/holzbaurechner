@@ -11,6 +11,7 @@
 <link rel="canonical" href="https://www.holzbaurechner.de/en/raised-bed-calculator/">
 <link rel="alternate" hreflang="de" href="https://www.holzbaurechner.de/hochbeet-rechner/">
 <link rel="alternate" hreflang="en" href="https://www.holzbaurechner.de/en/raised-bed-calculator/">
+<link rel="alternate" hreflang="en-US" href="https://www.holzbaurechner.de/us/raised-bed-calculator/">
 <link rel="alternate" hreflang="x-default" href="https://www.holzbaurechner.de/en/raised-bed-calculator/">
 
 <meta property="og:type" content="website">
@@ -35,7 +36,7 @@
 <meta name="apple-mobile-web-app-title" content="Holzbaurechner">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preload" href="/assets/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=da22e72ca7">
+<link rel="stylesheet" href="/assets/style.css?v=6d684528f1">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Raised bed calculator","inLanguage":"en","url":"https://www.holzbaurechner.de/en/raised-bed-calculator/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How many boards do I need for a raised bed?","acceptedAnswer":{"@type":"Answer","text":"That depends on the height and the board width. With 145 mm boards and a height of 80 cm you need six courses, so 24 boards for a rectangular bed. The calculator shows the exact number for your sizes."}},{"@type":"Question","name":"Do I need to line the raised bed?","acceptedAnswer":{"@type":"Answer","text":"Yes, dimpled membrane on the inside protects the timber from constant moisture and makes it last much longer. The dimples face the timber so that air can circulate."}},{"@type":"Question","name":"How long does a larch raised bed last?","acceptedAnswer":{"@type":"Answer","text":"Lined on the inside and kept clear of the ground, larch often lasts ten years or more."}}]}</script>
 <!-- AdSense: Script hier einfügen (dasselbe wie in src/layout.html). -->
@@ -89,6 +90,16 @@
   </ul>
   <p>The material settles over the first few years. Top up with compost or soil every spring. To work out the volume, multiply length × width × height: a bed of 2 × 1 m and 80 cm high holds 1.6 m³. Most of it is taken up by the lower layers, so you only need bought soil for the top layer.</p>
 
+  <aside class="shop" aria-label="Parts on Amazon">
+  <h2>Parts on Amazon</h2>
+  <p class="shop-note">These are paid links. As an Amazon Associate I earn from qualifying purchases. The price you pay stays the same.</p>
+  <ul>
+    <li><a href="https://www.amazon.co.uk/s?k=dimpled+membrane+raised+bed+liner&tag=holzbaurechne-21" target="_blank" rel="sponsored nofollow noopener">Raised bed liner</a> <span class="shop-mark">(paid link)</span><span class="shop-hint">fix inside the side walls</span></li>
+    <li><a href="https://www.amazon.co.uk/s?k=galvanised+wire+mesh+raised+bed+rodent&tag=holzbaurechne-21" target="_blank" rel="sponsored nofollow noopener">Galvanised rodent mesh</a> <span class="shop-mark">(paid link)</span><span class="shop-hint">under the bed</span></li>
+    <li><a href="https://www.amazon.co.uk/s?k=stainless+steel+wood+screws+A2&tag=holzbaurechne-21" target="_blank" rel="sponsored nofollow noopener">Stainless steel screws</a> <span class="shop-mark">(paid link)</span><span class="shop-hint">for boards and posts</span></li>
+  </ul>
+</aside>
+
   <h2>Frequently asked questions</h2>
 </div>
 <details class="faq"><summary>How many boards do I need for a raised bed?</summary><div>That depends on the height and the board width. With 145 mm boards and a height of 80 cm you need six courses, so 24 boards for a rectangular bed. The calculator shows the exact number for your sizes.</div></details>
@@ -100,6 +111,7 @@
 <footer class="site-footer">
   <div class="wrap">
     <p>All timber sections are guide values and do not replace a structural calculation. Carports and patio covers may need planning permission and building regulations approval, and a structural engineer's check depending on where you live.</p>
+    <p class="affiliate-note">Links marked “paid link” are affiliate links. As an Amazon Associate I earn from qualifying purchases.</p>
     <p class="install" hidden><span class="install-text">Holzbaurechner as an app: sits on your home screen and works offline.</span> <button class="btn ghost install-btn" type="button" hidden>Install app</button></p>
     <p><a href="/en/about/">About</a> <a href="/en/contact/">Contact</a> <a href="/en/legal-notice/">Legal notice</a> <a href="/en/privacy/">Privacy</a> <a href="#cookie-settings" class="cookie-settings" hidden>Cookie settings</a> <a href="/" hreflang="de" lang="de">Deutsch</a> <span class="region-foot"></span> <span>© 2026 Holzbaurechner</span></p>
   </div>
@@ -118,18 +130,34 @@
 })();
 window.ANSICHT3D = "/assets/ansicht3d.en.js?v=6c8ed296d2";
 </script>
-<script src="/assets/rechner.en.js?v=f78c66a242" defer></script>
+<script src="/assets/rechner.en.js?v=1a54f8be69" defer></script>
 <script src="/assets/app.en.js?v=89673920e6" defer></script>
 <script id="region-js">
 /* Auswahl der Region unter jedem Rechner und im Fuß */
 (function(){
   var R=window.HOLZPREISE_REGIONEN||{}, cur=window.HOLZPREISE_REGION;
+  /* US-Fassung in Fuß und Zoll: Gegenstück aus dem hreflang-Link, sonst US-Startseite */
+  var usL=document.querySelector('link[hreflang="en-US"]'), us=usL?new URL(usL.href).pathname:'/us/';
   function pick(){
     var s=document.createElement('select'); s.setAttribute('aria-label','Currency and country for prices');
-    s.innerHTML=Object.keys(R).map(function(k){return '<option value="'+k+'"'+(k===cur?' selected':'')+'>'+R[k].symbol+' · '+R[k].name+'</option>';}).join('');
-    s.addEventListener('change',function(){ var u=new URL(location.href); u.searchParams.set('region',s.value); location.href=u.toString(); });
+    s.innerHTML=Object.keys(R).map(function(k){return '<option value="'+k+'"'+(k===cur?' selected':'')+'>'+R[k].symbol+' · '+R[k].name+'</option>';}).join('')+
+      '<option value="us">$ · United States (feet and inches)</option>';
+    s.addEventListener('change',function(){ if(s.value==='us'){ location.href=us; return; } var u=new URL(location.href); u.searchParams.set('region',s.value); location.href=u.toString(); });
     return s;
   }
+  /* Besucher aus Amerika: Hinweis auf die US-Fassung (einmal wegklickbar) */
+  try{
+    var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';
+    if(tz.indexOf('America/')===0 && !localStorage.getItem('hbr-region') && !localStorage.getItem('hbr-us-hint')){
+      document.addEventListener('DOMContentLoaded',function(){
+        var m=document.querySelector('main'); if(!m) return;
+        var d=document.createElement('p'); d.className='us-hint';
+        d.innerHTML='Building in the US? <a href="'+us+'">Use the version in feet, inches and dollars</a> <button type="button" aria-label="Close">×</button>';
+        d.querySelector('button').addEventListener('click',function(){ try{localStorage.setItem('hbr-us-hint','1');}catch(e){} d.remove(); });
+        m.insertBefore(d,m.firstChild);
+      });
+    }
+  }catch(e){}
   var f=document.querySelector('.region-foot'); if(f){ f.appendChild(document.createTextNode('Prices: ')); f.appendChild(pick()); }
   /* Im Rechner als eigenes Feld bei den Preisen; der Rechner baut sich erst beim Laden auf */
   document.addEventListener('DOMContentLoaded',function(){
