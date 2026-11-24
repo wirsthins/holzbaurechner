@@ -1,7 +1,7 @@
 /* Service Worker für die Holzbaurechner-App.
    build.js setzt Version und Dateiliste ein und legt die Datei als /sw.js ab.
    Seiten: erst Netz (max. 3 s), sonst gespeicherte Fassung. Dateien unter /assets/: aus dem Speicher. */
-const VERSION = '8ced6f14fc';
+const VERSION = '897b0f7510';
 const PRECACHE = [
   "/",
   "/adventskalender-rechner/",
