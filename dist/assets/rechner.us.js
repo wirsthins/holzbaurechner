@@ -6,7 +6,7 @@ const PR=(typeof window!=='undefined'&&window.LUMBER_US)||{materials:{},items:{}
 const MAT=PR.materials||{}, ITEM=PR.items||{};
 const IN=.0254, M=x=>x*IN;
 /* actual size in inches [thickness, width] for nominal lumber */
-const SIZE={'1/2x4':[.5,3.5],'1x4':[.75,3.5],'1x6':[.75,5.5],'1x8':[.75,7.25],'1x10':[.75,9.25],'1x12':[.75,11.25],
+const SIZE={'2x2':[1.5,1.5],'1/2x4':[.5,3.5],'1x4':[.75,3.5],'1x6':[.75,5.5],'1x8':[.75,7.25],'1x10':[.75,9.25],'1x12':[.75,11.25],
   '5/4x6':[1,5.5],'composite':[.94,5.5],'picket':[.625,5.5],'2x4':[1.5,3.5],'2x6':[1.5,5.5],'2x8':[1.5,7.25],
   '2x10':[1.5,9.25],'2x12':[1.5,11.25],'4x4':[3.5,3.5],'6x6':[5.5,5.5]};
 const SIZE_LABEL={'1/2x4':'1/2x4','composite':'1x6 composite','picket':'5/8x6 picket','5/4x6':'5/4x6'};
@@ -33,7 +33,8 @@ const matLabel=m=>(MAT[m]||{}).label||m;
 const part=(name,size,mat,len,qty)=>({name,size,mat,len,qty});
 const hw=(label,qty,each,est=true)=>({label,qty,cost:qty*each,est});
 function rate(mat,size){const r=((MAT[mat]||{}).rates||{})[size]; return r==null?null:r;}
-function boardPrice(mat,size,ft){const r=rate(mat,size); return r==null?null:r*ft*(ft>=20?1.25:ft>=16?1.1:1);}
+function boardPrice(mat,size,ft){const fx=(PR.fixed||{})[`${mat}|${size}|${ft}`]; if(fx!=null) return fx;
+  const r=rate(mat,size); return r==null?null:r*ft*(ft>=20?1.25:ft>=16?1.1:1);}
 /* cuts (inches) into stock boards: best fit, new boards picked by cost per inch used. 1/8" saw kerf */
 function pack(cuts,mat,size){
   const K=.125, OVER=.25, Ls=stockOf(size), maxIn=Ls[Ls.length-1]*12, cost=L=>boardPrice(mat,size,L)||L;
@@ -85,14 +86,14 @@ function beamSpan(sp,key,ljFt){const c=[6,8,10,12,14,16,18], t=BEAM[sp][key];
   for(let i=1;i<c.length;i++) if(ljFt<=c[i]) return t[i-1]+(t[i]-t[i-1])*(ljFt-c[i-1])/2; return 0;}
 function joistFor(sp,spanIn,s){const i=SPC.indexOf(s); for(const z of ['2x6','2x8','2x10','2x12']) if(JOIST[sp][z][i]>=spanIn-1e-6) return z; return null;}
 /* beam size and post count along one beam line of length W (in), cheapest combination */
-function beamLine(sp,W,ljFt,postEach,maxPs){
+function beamLine(sp,W,ljFt,postEach,maxPs,factor=1,mat='pt'){
   let best=null;
   for(let n=2;n<=24;n++){
     const ob=Math.min(12,W/(n-1)/4.5), ps=(W-2*ob)/(n-1);
     if(maxPs&&ps>maxPs+1e-6) continue;
     for(const key of Object.keys(BEAM[sp])){
-      if(beamSpan(sp,key,ljFt)<ps-1e-6) continue;
-      const pl=+key[0], z=key.slice(2), cost=n*postEach+pl*W/12*(rate('pt',z)||2);
+      if(beamSpan(sp,key,ljFt)*factor<ps-1e-6) continue;
+      const pl=+key[0], z=key.slice(2), cost=n*postEach+pl*W/12*(rate(mat,z)||rate('pt',z)||2);
       if(!best||cost<best.cost-1e-6) best={n,ob,ps,key,plies:pl,size:z,cost};
     }
   }
@@ -517,6 +518,139 @@ const PROJECTS={
           'Use only pallets stamped HT (heat treated). Avoid pallets marked MB (methyl bromide), painted pallets and any that carried chemicals. Scrub, dry and sand them before they come indoors.'],
         plan:{w:Mx(FW),h:Mx(FL),top:kopf?-Mx(PH)-.02:0,items:it,unit:'ftin'},
         side:{w:Mx(FL),x0:kopf?-Mx(PH)-.03:0,dimW:Mx(FL),zTop:kopf?Mx(40):Mx(H+10),items:s2,right:Mx(H),unit:'ftin'}};
+    }
+  },
+  stairs:{
+    label:'deck stairs', postLabel:'Stringers', round:1,
+    fields:[
+      {id:'R',label:'Total rise (deck surface to ground)',unit:'in',min:8,max:147,step:.25,value:30},
+      {id:'W',label:'Stair width',unit:'in',min:36,max:96,step:1,value:36},
+      {id:'T',label:'Target riser height',unit:'in',min:5,max:7.75,step:.125,value:7.25}
+    ],
+    mats:['pt','cedar','composite'], matLabel:'Treads',
+    option:'Closed risers (riser boards)',
+    calc(v,closed,_b,mat){
+      const R=v.R, W=v.W;
+      let n=Math.max(2,Math.round(R/v.T)); while(R/n>7.75+1e-9) n++; while(n>2&&R/(n-1)<=7.75&&R/n<4) n--;
+      const r=R/n, comp=mat==='composite', tb=comp?'composite':(mat==='pt'||mat==='cedar')?'2x6':'2x6';
+      const bt=comp?.94:1.5, tw=5.5, gap=comp?3/16:1/4, tDepth=2*tw+gap, nose=1, run=tDepth-nose, nt=n-1;
+      const tRun=nt*run, hyp=Math.hypot(r,run), throat=11.25-r*run/hyp;
+      const smax=comp?12:18, ns=Math.max(2,Math.ceil((W-1.5)/smax-1e-9)+1), sp=(W-1.5)/(ns-1);
+      const sLen=Math.hypot(R,tRun)+12;
+      const parts=[part('Stringers (cut from 2x12)','2x12','pt',sLen,ns),part('Tread boards',tb,comp?'composite':mat,W,2*nt)];
+      if(closed) parts.push(part('Riser boards','1x8',mat==='cedar'?'cedar':'pt',W,n));
+      const hws=[hw('Stringer connectors at the deck',ns,8),hw(comp?'Screws for composite treads':'Deck screws for treads',2*nt*ns*2,ITEM.deckScrew||.11),
+        hw('Concrete landing pad or pavers at the bottom',1,Math.max(40,W/12*3*12),true)];
+      if(closed) hws.push(hw('Screws for riser boards',n*ns*2,.08));
+      const long=tRun>72;
+      /* side view: x = horizontal from the deck edge outwards, z = height */
+      const Rm=M(R), s2=[];
+      const off=throat*hyp/run, zl0=R-r-bt-off, xg=Math.min(tRun,Math.max(0,zl0*run/r));
+      const pin=[[0,R-bt]]; for(let i=0;i<nt;i++){const zs=R-(i+1)*r-bt; pin.push([i*run,zs],[(i+1)*run,zs]);}
+      pin.push([tRun,0],[xg,0],[0,Math.max(0,zl0)]);
+      const poly=pin.map(([x,z])=>[M(x),M(z)]);
+      s2.push({k:'wall',x:-M(12),z:Rm-M(9.25),w:M(12),h:M(9.25)});
+      s2.push({k:'beam',pts:poly});
+      for(let i=0;i<nt;i++){const z=M(R-(i+1)*r); s2.push({k:'board',x:M(i*run-nose),z:z-M(bt),w:M(tDepth),h:M(bt)});}
+      if(closed) for(let i=0;i<nt;i++){const z=M(R-(i+1)*r); s2.push({k:'hidden',x:M(i*run-.75),z,w:M(.75),h:M(r-bt)});}
+      /* plan: stringers and treads */
+      const Wm=M(W), it=[{k:'outline',x:0,y:0,w:Wm,h:M(tRun)}];
+      for(let j=0;j<ns;j++) it.push({k:'hidden',x:M(Math.min(j*sp,W-1.5)),y:0,w:M(1.5),h:M(tRun)});
+      for(let i=0;i<nt;i++) for(let b=0;b<2;b++) it.push({k:'board',x:0,y:M(i*run-nose+b*(tw+gap)),w:Wm,h:M(tw)});
+      const model=()=>{const P=[], t=M(1.5);
+        P.push({n:'Deck',c:'wall',env:1,box:[-M(12),-M(24),Rm-M(9.25),Wm+M(12),0,Rm]});
+        for(let j=0;j<ns;j++){const x=M(Math.min(j*sp,W-1.5)); P.push({n:'Stringers',c:'rafter',prism:{plane:'yz',pts:poly,at:x,t}});}
+        for(let i=0;i<nt;i++){const z=M(R-(i+1)*r); for(let b=0;b<2;b++){const y0=M(i*run-nose+b*(tw+gap));
+          P.push({n:'Treads',c:'board',box:[0,y0,z-M(bt),Wm,y0+M(tw),z]});}}
+        if(closed) for(let i=0;i<nt;i++){const z=M(R-(i+1)*r); P.push({n:'Riser boards',c:'plate',box:[0,M(i*run)-M(.75),z,Wm,M(i*run),z+M(r)-M(bt)]});}
+        return {parts:P,person:[Wm/2,M(tRun)+.6]};};
+      return {parts,hws,
+        summary:[[String(n),'Risers'],[inch(r,16),'Riser height'],[inch(run,8),'Run per step'],[ftin(tRun),'Total run']],
+        notes:[`${n} risers of ${inch(r,16)} and ${nt} treads with a run of ${inch(run)} each. The deck surface counts as the top step, so there is one tread fewer than risers.`,
+          `Each tread is two ${comp?'composite':'2x6'} boards (${inch(tDepth)} deep) with a 1 in. nosing over the riser below.`,
+          `${ns} stringers cut from 2x12 about ${ftin(sLen)} long, ${inch(sp,4)} apart (DCA 6: no more than 18 in.${comp?', composite treads usually 12 in.':''}). The remaining throat is ${inch(throat,8)}${throat<5?', less than the 5 in. most guides ask for: use solid stringers with stair brackets or add a middle support':''}.`,
+          long?`The stairs run ${ftin(tRun)} horizontally. Cut 2x12 stringers may span no more than 6 ft, so support them in the middle with a beam on posts or add a landing.`:'The horizontal span stays under the 6 ft limit for cut 2x12 stringers.',
+          n>=4?'Four or more risers need a handrail on at least one side, 34 to 38 in. above the tread nosings. Stairs more than 30 in. above grade also need guards with balusters less than 4-3/8 in. apart.':'With fewer than four risers no handrail is required by the IRC.',
+          'Handrails, guards and the landing at the bottom are not in the lumber list. Keep every riser within 3/8 in. of the others, including the first one off the landing.'],
+        plan:{w:Wm,h:M(tRun),items:it,unit:'ftin',title:'Plan'},
+        side:{w:M(tRun+12),x0:-M(12),zTop:Rm+M(4),items:s2,right:Rm,unit:'ftin',dimW:M(tRun)},model};
+    }
+  },
+  pergola:{
+    label:'pergola',
+    fields:[
+      {id:'L',label:'Length (along the beams)',unit:'ft',min:8,max:30,step:.5,value:12},
+      {id:'W',label:'Width (rafter span)',unit:'ft',min:6,max:18,step:.5,value:10},
+      {id:'H',label:'Clear height under the beams',unit:'ft',min:7,max:10,step:.25,value:8},
+      {id:'O',label:'Overhang of beams and rafters',unit:'in',min:6,max:30,step:1,value:18},
+      {id:'S',label:'Rafter spacing',type:'select',options:[[12,'12 in. on center'],[16,'16 in. on center'],[24,'24 in. on center']],value:16},
+      {id:'F',label:'Footing depth (frost line)',unit:'in',min:12,max:72,step:1,value:36}
+    ],
+    mats:['pt','cedar'], matLabel:'Lumber',
+    option:'Shade slats on top (2x2 every 6 in.)',
+    calc(v,slats,_b,mat){
+      const ced=mat==='cedar', jt=ced?'rc':'sp', L=v.L*12, W=v.W*12, H=v.H*12, o=v.O, s0=+v.S;
+      let s=s0, z=joistFor(jt,W,s); if(!z&&s>16){s=16;z=joistFor(jt,W,s);} if(!z&&s>12){s=12;z=joistFor(jt,W,s);} if(!z) z='2x12';
+      if(z==='2x6') z='2x8';
+      const zd=SIZE[z][1], Lt=L+2*o, Wt=W+2*o, nr=Math.ceil(Lt/s-1e-9)+1;
+      const post=(rate(mat,'6x6')||3.8)*H/12+(ITEM.postBase6||28)+(ITEM.postCap6||22)+bagsFor(12,v.F,.6)*(ITEM.concrete80||6.5);
+      const lj=Math.min(18,Math.max(6,(W/2+o)*2/12));
+      /* posts on the corners of L × W (plus middle posts if needed), beams overhang them by o */
+      let bl=null;
+      for(let n=2;n<=12;n++){const ps0=L/(n-1);
+        for(const key of Object.keys(BEAM.df)){ if(beamSpan('df',key,lj)*(ced?.9:1)<ps0-1e-6) continue;
+          const pl=+key[0], zs=key.slice(2), cost=n*post+pl*Lt/12*(rate(mat,zs)||2);
+          if(!bl||cost<bl.cost-1e-6) bl={n,key,plies:pl,size:zs,cost};}}
+      if(!bl) bl={n:12,key:'3-2x12',plies:3,size:'2x12'};
+      /* posts stand at the ends of L; the beam overhangs them by o */
+      const xs=[]; for(let i=0;i<bl.n;i++) xs.push(o+i*L/(bl.n-1));
+      const ps=L/(bl.n-1), bd=SIZE[bl.size][1], bw=bl.plies*1.5, nk=4*(bl.n-1)+4;
+      const nsl=slats?Math.ceil(Wt/6-1e-9)+1:0;
+      const parts=[part('Posts','6x6',mat,H,2*bl.n),part(`Beams (${bl.key.replace('-','-ply ')})`,bl.size,mat,Lt,2*bl.plies),
+        part('Rafters',z,mat,Wt,nr),part('Knee braces','4x4',mat,36,nk)];
+      if(slats) parts.push(part('Shade slats','2x2',mat,Lt,nsl));
+      const hws=[hw('Post bases and post caps',2*bl.n,(ITEM.postBase6||28)+(ITEM.postCap6||22)),
+        hw(`Concrete for footings (80 lb bags, 12" dia. × ${v.F}" deep)`,bagsFor(12,v.F,.6)*2*bl.n,ITEM.concrete80||6.5),
+        hw('Hurricane ties',nr*2,ITEM.hurricaneTie||1.2),hw('Structural screws for braces and beams',nk*4+bl.n*4,1.2)];
+      if(slats) hws.push(hw('Exterior screws for slats',nsl*nr,.08));
+      /* plan: x = length, y = width (m) */
+      const Ltm=M(Lt), Wtm=M(Wt), it=[{k:'outline',x:M(o),y:M(o),w:M(L),h:M(W)}], rg=(Lt-1.5)/(nr-1);
+      [o,o+W].forEach(y=>it.push({k:'beam',x:0,y:M(y-bw/2),w:Ltm,h:M(bw)}));
+      for(let i=0;i<nr;i++) it.push({k:'beam',x:M(i*rg),y:0,w:M(1.5),h:Wtm});
+      if(slats) for(let i=0;i<nsl;i++) it.push({k:'board',x:0,y:M(Math.min(i*6,Wt-1.5)),w:Ltm,h:M(1.5)});
+      xs.forEach(x=>[o,o+W].forEach(y=>it.push({k:'post',x:M(x-2.75),y:M(y-2.75),w:M(5.5),h:M(5.5)})));
+      const zP=M(H+bd), pp=M(5.5), b4=M(3.5), dk=.75, d=Math.min(dk/Math.SQRT2,(M(ps)-pp)*.35);
+      const side=(()=>{const s2=[];
+        xs.forEach((x,i)=>{const cx=M(x);
+          if(i<xs.length-1) s2.push({k:'beam',pts:brace(cx+pp/2,M(H),d,b4,1)});
+          if(i>0) s2.push({k:'beam',pts:brace(cx-pp/2,M(H),d,b4,-1)});
+          s2.push({k:'post',x:cx-pp/2,z:0,w:pp,h:M(H)});});
+        s2.push({k:'beam',x:0,z:M(H),w:Ltm,h:M(bd)});
+        for(let i=0;i<nr;i++) s2.push({k:'beam',x:M(i*rg),z:zP,w:M(1.5),h:M(zd)});
+        if(slats) s2.push({k:'board',x:0,z:zP+M(zd),w:Ltm,h:M(1.5)});
+        return {w:Ltm,zTop:zP+M(zd)+(slats?M(1.5):0),items:s2,right:M(H),unit:'ftin'};})();
+      const model=()=>{const P=[], bwm=M(bw);
+        [o,o+W].forEach(yy=>{const y=M(yy);
+          xs.forEach((x,i)=>{const cx=M(x);
+            P.push({n:'Posts',c:'post',box:[cx-pp/2,y-pp/2,0,cx+pp/2,y+pp/2,M(H)]});
+            if(i<xs.length-1) P.push({n:'Knee braces',c:'brace',prism:{plane:'xz',pts:brace(cx+pp/2,M(H),d,b4,1),at:y-b4/2,t:b4}});
+            if(i>0) P.push({n:'Knee braces',c:'brace',prism:{plane:'xz',pts:brace(cx-pp/2,M(H),d,b4,-1),at:y-b4/2,t:b4}});});
+          P.push({n:'Beams',c:'purlin',box:[0,y-bwm/2,M(H),Ltm,y+bwm/2,zP]});});
+        [0,bl.n-1].forEach(i=>{const cx=M(xs[i]), dir=i===0?1:-1;
+          P.push({n:'Knee braces',c:'brace',prism:{plane:'yz',pts:brace(M(o)+pp/2,M(H),d,b4,1),at:cx-b4/2,t:b4}},
+            {n:'Knee braces',c:'brace',prism:{plane:'yz',pts:brace(M(o+W)-pp/2,M(H),d,b4,-1),at:cx-b4/2,t:b4}});});
+        for(let i=0;i<nr;i++) P.push({n:'Rafters',c:'rafter',box:[M(i*rg),0,zP,M(i*rg+1.5),Wtm,zP+M(zd)]});
+        if(slats) for(let i=0;i<nsl;i++){const y=M(Math.min(i*6,Wt-1.5)); P.push({n:'Shade slats',c:'board',hull:1,box:[0,y,zP+M(zd),Ltm,y+M(1.5),zP+M(zd)+M(1.5)]});}
+        return {parts:P,hull:slats?'Show shade slats':undefined,person:[M(o+L/2),M(o+W/2)],front:'x'};};
+      return {parts,hws,
+        summary:[[`${num(v.L*v.W)} sq ft`,'Shaded area'],[z,'Rafters'],[bl.key.replace('-','-ply '),'Beams'],[String(2*bl.n),'Posts']],
+        notes:[`${2*bl.n} posts (6x6) on a ${ftin(L)} × ${ftin(W)} grid, ${bl.n} per side${bl.n>2?`, ${ftin(ps)} apart`:''}. Beams ${bl.key.replace('-','-ply ')} on top of the posts, overhanging ${inch(o)} at each end.`,
+          `${nr} rafters (${z}) at ${s} in. on center across the beams, ${ftin(Wt)} long with ${inch(o)} overhang on both sides.`+(s<s0?` The span needs closer spacing than ${s0} in., so the calculation uses ${s} in.`:'')+(slats?` ${nsl} shade slats (2x2) every 6 in. on top of the rafters.`:''),
+          'An open pergola carries little more than its own weight. The calculator still sizes rafters and beams with the IRC deck span tables, so they are strong enough for a later shade cloth or a light roof and do not sag.',
+          `Knee braces at every post stiffen the frame in both directions. A freestanding pergola needs them, or posts set deep in concrete.`,
+          'Many cities exempt open pergolas from a permit up to a certain size, others do not. Check before you build, especially near property lines.',
+          'Decorative rafter tail cuts, stain and a shade cloth are not included.'],
+        plan:{w:Ltm,h:Wtm,items:it,unit:'ftin',title:'Plan'},side,model};
     }
   },
   crate:{

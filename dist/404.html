@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seite nicht gefunden · Page not found · Holzbaurechner</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=6d684528f1">
+<style>.nf{display:none}.nf.on{display:block}</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="/"><svg class="brand-logo" viewBox="3 3 26 26" aria-hidden="true" focusable="false"><rect x="3" y="3" width="26" height="26" rx="4" fill="#A8661F"/><circle cx="16" cy="16" r="8" fill="none" stroke="#EBDABF" stroke-width="2"/><circle cx="16" cy="16" r="3.5" fill="none" stroke="#EBDABF" stroke-width="2"/></svg>Holzbaurechner</a>
+  </div>
+</header>
+<main class="wrap">
+  <section class="nf" data-nf="de" lang="de">
+    <h1>Seite nicht gefunden</h1>
+    <p class="lead">Diese Adresse gibt es nicht oder nicht mehr. Alle Rechner findest du auf der Startseite.</p>
+    <p><a class="btn" href="/">Zu den Rechnern</a></p>
+  </section>
+  <section class="nf" data-nf="en" lang="en">
+    <h1>Page not found</h1>
+    <p class="lead">This page does not exist or has moved. You will find all timber calculators on the home page.</p>
+    <p><a class="btn" href="/en/">To the calculators</a></p>
+  </section>
+  <section class="nf" data-nf="us" lang="en-US">
+    <h1>Page not found</h1>
+    <p class="lead">This page does not exist or has moved. You will find all lumber calculators in feet and inches on the home page.</p>
+    <p><a class="btn" href="/us/">To the calculators</a></p>
+  </section>
+  <p class="nf-other"><a href="/" hreflang="de" lang="de">Deutsch</a> · <a href="/en/" hreflang="en" lang="en">English (metric)</a> · <a href="/us/" hreflang="en-US" lang="en-US">English (US, feet and inches)</a></p>
+</main>
+<script>
+(function(){
+  var m=location.pathname.match(/^\/(en|us)(\/|$)/), k=m?m[1]:'de';
+  document.querySelector('[data-nf="'+k+'"]').classList.add('on');
+  if(k!=='de') document.documentElement.lang=k==='us'?'en-US':'en';
+  document.title=k==='de'?'Seite nicht gefunden · Holzbaurechner':'Page not found · Holzbaurechner';
+})();
+</script>
+<noscript><style>.nf[data-nf="de"]{display:block}</style></noscript>
+</body>
+</html>
